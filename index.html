@@ -5808,14 +5808,14 @@
         // 備用 AI 題庫
         const aiQuestionsExtra = [
             { question: "哪種學習方式通���不需要人工標註標���？", options: ["監督學習", "非監督學習", "半監督學習", "強化學習"], correct: 1 },
-            { question: "哪家公司開發了語言模型BERT？", options: ["OpenAI", "Google", "Facebook", "Microsoft"], correct: 1 },
+            { question: "哪家公司開發了語言模型BERT? ", options: ["OpenAI", "Google", "Facebook", "Microsoft"], correct: 1 },
             { question: "在圖像生成中，哪個技術常用於提高圖像質量的細節控制？", options: ["Diffusion模型", "決策樹", "支持向量機", "KMeans 分群"], correct: 0 },
-            { question: "AI倫理討論中，哪一項是常見關切？", options: ["能源消耗", "模型尺寸", "訓練速度", "色彩空間"], correct: 0 }
+            { question: "AI倫理討論中，哪一項是常見關切?", options: ["能源消耗", "模型尺寸", "訓練速度", "色彩空間"], correct: 0 }
         ];
 
         // 備用 Web 開發題庫
         const webQuestionsExtra = [
-            { question: "哪個標籤用於在HTML插入可縮放的矢量圖形？", options: ['<svg>', '<canvas>', '<img>', '<vector>'], correct: 0 },
+            { question: "哪個標籤用於在HTML插入可縮放的矢量圖形?", options: ['<svg>', '<canvas>', '<img>', '<vector>'], correct: 0 },
             { question: "CSS中的:root通常被用來做什麼？", options: ['定義全局變數', '設定圖片大小', '處理事件', '載入字體'], correct: 0 },
             { question: "哪個HTTP請求方法通常用於更新資源？", options: ['GET', 'POST', 'PUT', 'DELETE'], correct: 2 },
             { question: "下列哪個不是常見的前端打包工具？", options: ['Webpack', 'Vite', 'Parcel', 'MySQL'], correct: 3 }
@@ -5823,7 +5823,7 @@
 
         // 備用 Programming 題庫
         const programmingQuestionsExtra = [
-            { question: "在Python中，哪個內建類型是不可變的？", options: ['list', 'dict', 'tuple', 'set'], correct: 2 },
+            { question: "在Python中,哪個內建類型是不可變的？", options: ['list', 'dict', 'tuple', 'set'], correct: 2 },
             { question: "哪個命令可以在Linux下查看當前目錄的磁盤使用情況？", options: ['ls', 'df -h', 'du -sh', 'top'], correct: 2 },
             { question: "哪種排序演算法平均時間複雜度為 O(n log n)？", options: ['Bubble Sort', 'Insertion Sort', 'Quick Sort', 'Selection Sort'], correct: 2 },
             { question: "什麼是容器化技術常用來部署應用？", options: ['Docker', 'FTP', 'SMTP', 'Telnet'], correct: 0 }
@@ -7579,29 +7579,39 @@
     };
 
     // 檢查文字答案是否正確（支援部分答案/近似匹配）
+    // 支援多變體的文字答案驗證（可以傳入 string, array, or object {zh:, en:, variants:[] }）
     window.checkTextAnswer = function(userInput, correctAnswer) {
+        const candidates = [];
+
+        // Normalize input once
         const normalizedUser = window.normalizeAnswer(userInput || '');
-        const normalizedCorrect = window.normalizeAnswer(correctAnswer || '');
+        if (!normalizedUser) return false;
 
-        if (!normalizedCorrect) return false;
-
-        // exact match
-        if (normalizedUser === normalizedCorrect) return true;
-
-        // if user typed a meaningful substring (>=3 chars) that appears in correct answer
-        if (normalizedUser.length >= 3 && normalizedCorrect.includes(normalizedUser)) return true;
-
-        // if correct answer is short but user typed a longer string that contains it
-        if (normalizedCorrect.length >= 3 && normalizedUser.includes(normalizedCorrect)) return true;
-
-        // numeric compare
-        const numUser = Number(normalizedUser);
-        const numCorrect = Number(normalizedCorrect);
-        if (!Number.isNaN(numUser) && !Number.isNaN(numCorrect)) {
-            if (Math.abs(numUser - numCorrect) < 1e-6) return true;
+        // Build candidate correct answers list depending on type
+        if (Array.isArray(correctAnswer)) {
+            correctAnswer.forEach(c => { if (c) candidates.push(String(c)); });
+        } else if (typeof correctAnswer === 'object' && correctAnswer !== null) {
+            // support fields: correctText, correctTextZh, correctTextEn, variants
+            if (correctAnswer.correctText) candidates.push(String(correctAnswer.correctText));
+            if (correctAnswer.correctTextZh) candidates.push(String(correctAnswer.correctTextZh));
+            if (correctAnswer.correctTextEn) candidates.push(String(correctAnswer.correctTextEn));
+            if (Array.isArray(correctAnswer.variants)) correctAnswer.variants.forEach(v=>v && candidates.push(String(v)));
+        } else if (typeof correctAnswer === 'string') {
+            candidates.push(correctAnswer);
         }
 
-        // fallback fuzzy: allow small Levenshtein distance relative to length
+        // Normalize candidates and remove empties
+        const normalizedCandidates = candidates.map(c => window.normalizeAnswer(c)).filter(Boolean);
+        if (normalizedCandidates.length === 0) return false;
+
+        // helper: exact, substring, numeric, fuzzy
+        function isNumericMatch(u, v) {
+            const numU = Number(u);
+            const numV = Number(v);
+            if (!Number.isNaN(numU) && !Number.isNaN(numV)) return Math.abs(numU - numV) < 1e-6;
+            return false;
+        }
+
         function levenshtein(a, b) {
             const la = a.length, lb = b.length;
             if (la === 0) return lb;
@@ -7618,9 +7628,16 @@
             return d[la][lb];
         }
 
-        if (normalizedUser.length >= 1 && normalizedCorrect.length >= 1) {
-            const dist = levenshtein(normalizedUser, normalizedCorrect);
-            const threshold = Math.max(1, Math.floor(normalizedCorrect.length * 0.25));
+        // check each candidate
+        for (const nc of normalizedCandidates) {
+            if (nc === normalizedUser) return true; // exact
+            if (normalizedUser.length >= 3 && nc.includes(normalizedUser)) return true; // user substring
+            if (nc.length >= 3 && normalizedUser.includes(nc)) return true; // user contains correct
+            if (isNumericMatch(normalizedUser, nc)) return true; // numeric
+
+            // fuzzy: allow small distance relative to length
+            const dist = levenshtein(normalizedUser, nc);
+            const threshold = Math.max(1, Math.floor(nc.length * 0.25));
             if (dist <= threshold) return true;
         }
 
@@ -7636,7 +7653,18 @@
         if (!inputField) return;
         
         const userInput = inputField.value;
-        const isCorrect = window.checkTextAnswer(userInput, q.correctText);
+        // support multiple correct variants: q.correctText, q.correctTextEn, q.correctTextZh, q.correctTexts (array)
+        const correctVariants = [];
+        if (q.correctText !== undefined) correctVariants.push(q.correctText);
+        if (q.correctTextEn !== undefined) correctVariants.push(q.correctTextEn);
+        if (q.correctTextZh !== undefined) correctVariants.push(q.correctTextZh);
+        if (Array.isArray(q.correctTexts)) correctVariants.push(...q.correctTexts);
+        // fallback: if no explicit text variants, use options[correctIndex] if present
+        if (correctVariants.length === 0 && Array.isArray(q.options) && q.correctIndex !== undefined) {
+            const opt = q.options[q.correctIndex]; if (opt) correctVariants.push(opt);
+        }
+
+        const isCorrect = window.checkTextAnswer(userInput, correctVariants.length>0 ? correctVariants : '');
         
         q.answered = true;
         q.userAnswer = userInput;
@@ -7661,12 +7689,21 @@
         } else {
             inputField.style.borderColor = 'var(--wrong)';
             inputField.style.backgroundColor = 'rgba(255, 55, 80, 0.1)';
-            // 顯示正確答案
+            // 顯示正確答案（若有多種語言/變體，列出簡短提示）
             const hint = document.createElement('div');
             hint.style.marginTop = '10px';
             hint.style.color = 'var(--correct)';
             hint.style.fontSize = '14px';
-            hint.innerHTML = `✓ 正確答案: <strong>${q.correctText}</strong>`;
+            // build display list
+            const displayVariants = [];
+            if (q.correctText !== undefined) displayVariants.push(q.correctText);
+            if (q.correctTextZh !== undefined) displayVariants.push(q.correctTextZh);
+            if (q.correctTextEn !== undefined) displayVariants.push(q.correctTextEn);
+            if (Array.isArray(q.correctTexts)) displayVariants.push(...q.correctTexts);
+            if (displayVariants.length === 0 && Array.isArray(q.options) && q.correctIndex !== undefined) {
+                const opt = q.options[q.correctIndex]; if (opt) displayVariants.push(opt);
+            }
+            hint.innerHTML = `✓ 正確答案: <strong>${displayVariants.slice(0,3).join(' / ')}</strong>`;
             container.appendChild(hint);
         }
         
@@ -8345,6 +8382,468 @@ if (typeof window.sanitizeAndDedupeBanks === 'function') {
     try { window.sanitizeAndDedupeBanks(); } catch (e) { console.warn('sanitizeAndDedupeBanks failed:', e); }
 }
 // --- END: Injected bilingual starter banks ---
+})();
+</script>
+
+<!-- Injected: additional starter question banks (non-destructive, appended) -->
+<script>
+(function(){
+    const additions = {};
+
+    additions.aiQuestions = [
+        { question: "下列哪一項屬於監督式學習的常見任務？", options: ["分類 (Classification)", "聚類 (Clustering)", "降維 (Dimensionality reduction)", "生成 (Generation)"], correct: 0 },
+        { question: "在深度學習中，常用來避免過擬合的技術是？", options: ["Dropout", "Batching", "ReLU", "Softmax"], correct: 0 },
+        { question: "Transformer 最初應用在哪個領域？", options: ["自然語言處理", "電腦視覺", "強化學習", "推薦系統"], correct: 0 },
+        { question: "GAN 的 'G' 與 'D' 分別代表什麼？", options: ["Generator 與 Discriminator", "Gradient 與 Decoder", "Graph 與 Data", "Gaussian 與 Dirichlet"], correct: 0 },
+        { question: "何者不是模型評估的常用指標？", options: ["資料庫連接數", "準確率(Accuracy)", "精確率(Precision)", "召回率(Recall)"], correct: 0 }
+    ];
+
+    additions.webQuestions = [
+        { question: "HTML 中用來放置頁面標題的標籤是？", options: ["<title>", "<header>", "<h1>", "<meta>"], correct: 0 },
+        { question: "哪個 CSS 屬性用來設定彈性容器子項的排列方向？", options: ["flex-direction", "justify-content", "align-items", "display"], correct: 0 },
+        { question: "在前端中，哪個事件會在 DOM 完全載入但資源（圖片等）可能尚未載入時觸發？", options: ["DOMContentLoaded", "load", "click", "readystatechange"], correct: 0 },
+        { question: "為提高可存取性，圖片標籤應該包含哪個屬性？", options: ["alt", "title", "srcset", "data-src"], correct: 0 },
+        { question: "在 HTTP 中，哪個狀態碼代表資源不存在？", options: ["404", "200", "500", "301"], correct: 0 }
+    ];
+
+    additions.programmingQuestions = [
+        { question: "在一般程式語言中，'迴圈' 常用來做什麼？", options: ["重複執行程式碼區塊", "定義資料結構", "宣告變數類型", "編譯程式碼"], correct: 0 },
+        { question: "下列何者是不可變(immutable)資料結構的例子？", options: ["字串 (String)", "陣列 (Array)", "物件 (Object)", "可變集合 (Mutable set)"], correct: 0 },
+        { question: "在除錯時常用的兩種策略是？", options: ["列印日誌與逐步執行 (logging & step-debug)", "重啟電腦與換螢幕", "刪除程式碼與重寫", "只用猜測法"], correct: 0 },
+        { question: "何者為常見的時間複雜度表示法？", options: ["O(n)", "5x", "#lines", "percent"], correct: 0 }
+    ];
+
+    additions.gameDevQuestions = [
+        { question: "碰撞偵測(Collision Detection)通常用於哪個遊戲系統？", options: ["物理或碰撞系統", "音效系統", "介面佈局", "版本控制"], correct: 0 },
+        { question: "在遊戲開發中，'FPS' 既可以代表 'Frames Per Second'，也常代表？", options: ["First-Person Shooter", "Fast Performance System", "File Processing Service", "Feature Pull System"], correct: 1 },
+        { question: "常見的遊戲迴圈(主循環)步驟不包含下列哪一項？", options: ["編譯源代碼 (compile)", "處理輸入 (input)", "更新狀態 (update)", "呈現畫面 (render)"], correct: 0 }
+    ];
+
+    additions.securityQuestions = [
+        { question: "XSS 攻擊全名是？", options: ["跨站指令碼攻擊 (Cross-Site Scripting)", "跨來源資源共享 (CORS)", "跨站請求偽造 (CSRF)", "SQL 注入"], correct: 0 },
+        { question: "HTTPS 相對 HTTP 的主要優勢是？", options: ["加密傳輸與伺服器驗證", "速度更快", "不需要 DNS", "可省略憑證"], correct: 0 },
+        { question: "在密碼學中，對稱式加密的特徵是？", options: ["使用相同金鑰做加密與解密", "使用公私鑰對", "只能做簽章", "無法解密"], correct: 0 }
+    ];
+
+    additions.databaseQuestions = [
+        { question: "SQL 中用來篩選資料的關鍵字是？", options: ["WHERE", "ORDER BY", "GROUP BY", "HAVING"], correct: 0 },
+        { question: "關聯式資料庫 (RDBMS) 的主要特徵為何？", options: ["以表格(rows/tables)以及明確的關聯存放資料", "只能存放文字", "不支援查詢語言", "資料永遠不會改變"], correct: 0 },
+        { question: "建立索引(index)的主要目的是？", options: ["加速查詢速度", "減少磁碟空間", "加密資料", "備份資料庫"], correct: 0 }
+    ];
+
+    additions.multimediaQuestions = [
+        { question: "在影像處理中，'解析度' 常指的是？", options: ["像素數量或像素密度", "檔案類型", "色彩名稱", "採樣頻率"], correct: 0 },
+        { question: "常見的音訊檔案格式不包含下列哪一項？", options: ["PNG", "MP3", "WAV", "AAC"], correct: 0 },
+        { question: "在影片剪輯中，剪輯軟體常用的時間軸單位是？", options: ["幀 (frames)", "行 (lines)", "字元 (chars)", "百分比"], correct: 0 }
+    ];
+
+    additions.computerConfigQuestions = [
+        { question: "電腦升級時常見增加效能的元件是哪個？", options: ["增加 RAM", "更換滑鼠", "更換螢幕電源線", "更換鍵盤蓋"], correct: 0 },
+        { question: "SSD 相較於傳統 HDD 的優勢是？", options: ["讀寫速度較快且無機械震動", "容量較小且更便宜", "需要更多電力", "只能用於伺服器"], correct: 0 },
+        { question: "BIOS/UEFI 的功能不包含下列哪一項？", options: ["撰寫應用程式的商業邏輯", "初始化硬體並啟動作業系統", "硬體設定介面", "提供開機診斷資訊"], correct: 0 }
+    ];
+
+    // Append non-destructively to existing global banks
+    Object.keys(additions).forEach(k => {
+        try {
+            if (typeof window[k] !== 'undefined' && Array.isArray(window[k]) && window[k].length > 0) {
+                window[k] = window[k].concat(additions[k]);
+            } else {
+                window[k] = additions[k].slice();
+            }
+        } catch (e) {
+            console.warn('Failed to merge bank', k, e);
+            try { window[k] = additions[k].slice(); } catch(e2){}
+        }
+    });
+
+    // quick log to help testing
+    try { console.info('Appended question banks:', Object.keys(additions)); } catch(e){}
+})();
+</script>
+
+<!-- Injected: bilingual English learning bank + category card (non-destructive) -->
+<script>
+(function(){
+    const newBank = [
+        // Present Simple
+        { question: '現在簡單式 Present Simple | 現在簡單式用來表示經常發生或習慣性動作。\n例題：He (go) to school every day.  Which is correct?', options: ['He goes to school every day. | 他每天上學。', 'He go to school every day. | 他每天上學。', 'He going to school every day. | 他每天上學。', 'He gone to school every day. | 他每天上學。'], correct: 0 },
+        { question: 'Present Simple | Choose the correct negative form: She (not / like) coffee.', options: ['She does not like coffee. | 她不喜歡咖啡。', 'She not likes coffee. | 她不喜歡咖啡。', "She doesn't likes coffee. | 她不喜歡咖啡。", 'She no like coffee. | 她不喜歡咖啡。'], correct: 0 },
+
+        // Past Simple
+        { question: '過去簡單式 Past Simple | 表示已發生且結束的過去動作。\n例題：They (visit) Hong Kong last year.', options: ['They visited Hong Kong last year. | 他們去年到過香港。', 'They visit Hong Kong last year. | 他們去年到過香港。', 'They have visit Hong Kong last year. | 他們去年到過香港。', 'They will visit Hong Kong last year. | 他們去年到過香港。'], correct: 0 },
+
+        // Present Continuous
+        { question: '現在進行式 Present Continuous | 表示正在進行的動作。\n例題：I (study) now.', options: ['I am studying now. | 我現在正在唸書。', 'I study now. | 我現在唸書。', 'I studies now. | 我現在唸書。', 'I am study now. | 我現在唸書。'], correct: 0 },
+
+        // Simple Future
+        { question: '簡單未來式 Simple Future | 用 will 或 be going to 表示未來。\n例題：She (call) you tomorrow.', options: ['She will call you tomorrow. | 她明天會打電話給你。', 'She calls you tomorrow. | 她明天打電話給你。', 'She called you tomorrow. | 她明天打電話給你。', 'She calling you tomorrow. | 她明天打電話給你。'], correct: 0 },
+
+        // Past Perfect
+        { question: '過去完成式 Past Perfect | 用於兩個過去動作，表示較早發生者。\n例題：By the time we arrived, the film (already / start).', options: ['had already started | 已經開始了', 'already started | 已經開始了', 'has already started | 已經開始了', 'was already start | 已經開始了'], correct: 0 },
+
+        // Declarative / Interrogative / Imperative
+        { question: '敘述句 Declarative | Which is a declarative sentence?', options: ['He likes music. | 他喜歡音樂。', 'Do you like music? | 你喜歡音樂嗎？', 'Please close the door. | 請關門。', 'What a nice day! | 多好的一天！'], correct: 0 },
+        { question: '疑問句 Interrogative | Which is an interrogative sentence?', options: ['Do you like pizza? | 你喜歡披薩嗎？', 'I like pizza. | 我喜歡披薩。', 'Eat your vegetables. | 吃菜。', 'They went home. | 他們回家了。'], correct: 0 },
+        { question: '祈使句 Imperative | Which sentence is imperative (a command)?', options: ['Please sit down. | 請坐下。', 'She is sitting. | 她正在坐。', 'Is he coming? | 他來嗎？', 'They were late. | 他們遲到。'], correct: 0 },
+
+        // Main verbs / Auxiliary / Modal
+        { question: '主要動詞 Main verb vs. 助動詞 Auxiliary | Which is a main verb?', options: ['eat | 吃 (主要動詞)', 'do | 做 (助動詞/助詞)', 'have (as auxiliary) | 有 (助動詞)', 'will (modal) | 將'] , correct: 0 },
+        { question: '情態動詞 Modal verbs | Which sentence uses a modal verb to express ability?', options: ['She can swim. | 她會游泳。', 'She swims. | 她游泳。', 'She will swim. | 她會游泳（未來）。', 'She doing swim. | 她在游泳。'], correct: 0 },
+
+        // Descriptive / Comparing / Degree modifiers
+        { question: '形容詞比較 Comparing | Choose the superlative form: small → ______', options: ['smallest | 最小的', 'more small | 更小', 'most small | 最多小', 'smaller | 更小的'], correct: 0 },
+        { question: '程度副詞 Degree modifiers | Which sentence uses a degree modifier?', options: ['She is very happy. | 她非常高興。', 'She is happy. | 她高興。', 'She be happy. | 她是高興。', 'Happy she is. | 她高興。'], correct: 0 },
+
+        // Adverbial phrases / Complex
+        { question: '副詞片語 Adverbial phrases | Which is an adverbial phrase of frequency?', options: ['once a week | 每週一次', 'in the morning | 在早上', 'under the table | 在桌下', 'at midnight | 在午夜'], correct: 0 },
+        { question: '複雜副詞片語 Complex adverbial phrase | Choose the sentence with a complex adverbial clause.', options: ['I will go if it does not rain. | 如果不下雨我就去。', 'I will go. | 我會去。', 'Go now! | 現在去！', 'He go to school. | 他去學校。'], correct: 0 },
+
+        // Singular / Plural and exceptions
+        { question: '單複數 Singular/Plural | Choose the correct plural of "child".', options: ['children | 孩子們', 'childs | 錯誤', 'childes | 錯誤', 'child | 單數'], correct: 0 },
+        { question: '例外與不規則變化 Irregular | Past tense of "go" is?', options: ['went | 去（過去式）', 'goed | 錯誤', 'gone | 過去分詞', 'going | 現在分詞'], correct: 0 },
+
+        // Writing email for work (practical)
+        { question: '寫作 Email (工作用) | Choose the most appropriate formal email opening.', options: ['Dear Mr. Chan, | 親愛的陳先生，', 'Hey Chan, | 嘿，陳', 'Yo Chan, | 嘿', 'Hiya! | 哈囉！'], correct: 0 },
+        { question: '寫作 Email (closing) | Which is a suitable formal closing?', options: ['Regards,\nJane | 此致\nJane', 'Bye,\nJane | 拜', 'See ya,\nJane | 後會', 'Take care,\nJane | 保重'], correct: 0 }
+    ];
+
+    try {
+        if (Array.isArray(window.englishLearningQuestions) && window.englishLearningQuestions.length>0) {
+            window.englishLearningQuestions = window.englishLearningQuestions.concat(newBank);
+        } else {
+            window.englishLearningQuestions = newBank.slice();
+        }
+    } catch (e) {
+        window.englishLearningQuestions = newBank.slice();
+    }
+
+    // Ensure a category card exists and attach click handler
+    document.addEventListener('DOMContentLoaded', () => {
+        const grid = document.querySelector('.category-grid');
+        if (!grid) return;
+        if (grid.querySelector('[data-category="english-learning"]')) return;
+
+        const card = document.createElement('div');
+        card.className = 'category-card';
+        card.setAttribute('data-category','english-learning');
+        card.style.cursor = 'pointer';
+        card.innerHTML = `
+            <div style="padding:18px; display:flex; flex-direction:column; gap:8px;">
+                <div style="font-size:28px; font-weight:700;">📝 學習英語 / English Learning</div>
+                <div style="font-size:14px; color:#cfd8dc;">中英對照：時態、句型、實用電郵寫作練習（初學友善）</div>
+            </div>
+        `;
+
+        const onClick = (ev) => {
+            try { ev && ev.preventDefault && ev.preventDefault(); } catch(e){}
+            const intro = document.getElementById('introScreen');
+            const categoryScreen = document.getElementById('categoryScreen');
+            const mathScreen = document.getElementById('mathKingScreen');
+            const gameScreen = document.getElementById('gameScreen');
+            if (intro) intro.style.display = 'none';
+            if (categoryScreen) categoryScreen.style.display = 'none';
+            if (mathScreen) mathScreen.style.display = 'none';
+            if (gameScreen) gameScreen.style.display = 'block';
+
+            window.selectedCategory = 'english-learning';
+            const sel = document.getElementById('selectedCategoryName'); if (sel) sel.textContent = '學習英語 / English Learning';
+            const gameplayLabel = document.getElementById('selectedCategoryNameGameplay'); if (gameplayLabel) gameplayLabel.textContent = '學習英語 / English Learning';
+
+            try { const startBtn = document.getElementById('startIntroBtn') || document.getElementById('startBtn'); if (startBtn) { startBtn.disabled=false; startBtn.style.opacity='1'; startBtn.style.cursor='pointer'; startBtn.textContent = startBtn.textContent || '開始遊戲'; } } catch(e){}
+
+            if (typeof generateQuestions === 'function') { try{ generateQuestions(); } catch(e){ console.warn(e); } }
+            if (typeof initGame === 'function') { try{ initGame(); } catch(e){ console.warn(e); } }
+        };
+
+        card.addEventListener('click', onClick, { passive:false });
+        card.addEventListener('keypress', (e)=>{ if (e.key==='Enter' || e.key===' ') { e.preventDefault(); onClick(e); } });
+
+        grid.appendChild(card);
+    });
+
+    try { console.info('Injected english-learning bilingual bank and category card.'); } catch(e){}
+})();
+</script>
+
+<!-- Injected: additional English-learning expansions (append only) -->
+<script>
+(function(){
+    const extraQuestions = [
+        { question: 'Present Simple: He (play) football every weekend.', options: ['He plays football every weekend. | 他每個週末踢足球。','He play football every weekend.','He played football every weekend.','He is play football every weekend.'], correct: 0 },
+        { question: 'Past Simple: We (see) that movie last month.', options: ['We saw that movie last month. | 我們上個月看了那部電影。','We see that movie last month.','We have saw that movie last month.','We seen that movie last month.'], correct: 0 },
+        { question: 'Present Continuous: She (study) for exams now.', options: ['She is studying for exams now. | 她現在正在準備考試。','She studies for exams now.','She studied for exams now.','She study now.'], correct: 0 },
+        { question: 'Simple Future: I (help) you with the report tomorrow.', options: ['I will help you with the report tomorrow. | 我明天會幫你報告。','I help you tomorrow.','I helping you tomorrow.','I helped you tomorrow.'], correct: 0 },
+        { question: 'Past Perfect: By the time he arrived, we (finish) dinner.', options: ['had finished | 我們已經吃完晚餐。','finished','have finished','were finishing'], correct: 0 },
+
+        { question: 'Declarative vs Interrogative: Which is a question?', options: ['Are you coming? | 你會來嗎？','You are coming.','Come here.','They came.'], correct: 0 },
+        { question: 'Imperative: Choose the polite command.', options: ['Please send the document by Friday. | 請在週五前寄文件。','You send the document by Friday.','Send the document by Friday?','Document should be sent.'], correct: 0 },
+
+        { question: 'Modal verbs: Which expresses obligation?', options: ['should / must | 應該 / 必須','can','may','might'], correct: 0 },
+        { question: 'Modal - ability: Choose correct.', options: ['She can speak three languages. | 她會說三種語言。','She may speak three languages.','She must speak three languages.','She should speak three languages.'], correct: 0 },
+
+        { question: 'Main Verb vs Auxiliary: Identify main verb in sentence: "They have finished."', options: ['finished (main) | 完成（主要動詞）','have (main) | 錯誤','they (main) | 錯誤','finished (auxiliary) | 錯誤'], correct: 0 },
+
+        { question: 'Comparing: Choose comparative form of "big".', options: ['bigger | 更大','biggest','more big','most big'], correct: 0 },
+        { question: 'Degree modifiers: Which sentence uses a degree modifier?', options: ['She is quite happy. | 她相當高興。','She is happy.','She be happy.','Happy she is.'], correct: 0 },
+
+        { question: 'Adverbial phrase (frequency): Which shows frequency?', options: ['twice a month | 每月兩次','on the table','in the morning','by car'], correct: 0 },
+        { question: 'Complex adverbial clause: Identify sentence with condition.', options: ['If it rains, we will cancel. | 如果下雨，我們會取消。','I cancelled the meeting.','Rain heavily today.','They went because.'], correct: 0 },
+
+        { question: 'Singular/Plural: Correct plural of "mouse"?', options: ['mice | 老鼠（複數）','mouses','micees','mouse'], correct: 0 },
+        { question: 'Irregular exception: Past tense of "teach"?', options: ['taught | 教（過去式）','teached','teach','taughted'], correct: 0 },
+
+        { question: 'Writing email: Choose a professional subject line for an invoice email.', options: ['Invoice for Project Alpha – Due 30 Nov | 專業範例','Hi, invoice attached','Invoice?','Please read invoice'], correct: 0 },
+        { question: 'Writing email: Choose a polite closing.', options: ['Kind regards,\n[Name] | 此致\n敬禮','Bye,\n[Name]','See ya,\n[Name]','Thanks!'], correct: 0 }
+    ];
+
+    try {
+        if (Array.isArray(window.englishLearningQuestions) && window.englishLearningQuestions.length>0) {
+            window.englishLearningQuestions = window.englishLearningQuestions.concat(extraQuestions);
+        } else {
+            window.englishLearningQuestions = extraQuestions.slice();
+        }
+        console.info('Appended extra English-learning questions:', extraQuestions.length);
+    } catch (e) {
+        console.warn('Failed to append extra english questions', e);
+        window.englishLearningQuestions = (window.englishLearningQuestions || []).concat(extraQuestions);
+    }
+})();
+</script>
+
+<!-- Injected: Scratch, Cangjie training and Math expansions (non-destructive) -->
+<script>
+(function(){
+    // 1) Scratch question bank (non-destructive)
+    const scratchAdd = [
+        { question: 'Scratch: Which block starts a script when the green flag is clicked?', options: ['When green flag clicked | 綠旗被點擊時', 'Forever | 一直重複', 'If then | 如果...則', 'Change x by 10 | x 加 10'], correct: 0 },
+        { question: 'Scratch: Which block is used to store values across the script?', options: ['Variable (make a variable) | 變數', 'Costume | 造型', 'Backdrop | 背景', 'Sound block | 音效積木'], correct: 0 },
+        { question: 'Scratch: What does the "repeat" block do?', options: ['Runs the enclosed blocks a fixed number of times | 重複執行指定次數', 'Runs forever until stopped | 一直執行', 'Creates a new sprite | 建立角色', 'Saves a variable | 儲存變數'], correct: 0 },
+        { question: 'Scratch: Which block checks a condition?', options: ['If <condition> then | 條件判斷', 'Set volume to | 設音量', 'Next costume | 下個造型', 'Play sound | 播放音效'], correct: 0 },
+        { question: 'Scratch: Which block moves a sprite on the stage?', options: ['Change x by 10 | x 軸移動', 'Hide | 隱藏', 'Say Hello | 顯示文字', 'Wait 1 sec | 等待'], correct: 0 },
+        { question: 'Scratch: Which reporter block gives you mouse x position?', options: ['mouse x | 滑鼠 X 座標', 'random position | 隨機', 'key pressed? | 鍵是否按下', 'touching color? | 碰到顏色?'], correct: 0 },
+        { question: 'Scratch: What is a costume used for?', options: ['Changing the look of a sprite | 改變角色外觀', 'Playing sound', 'Changing stage size', 'Creating variables'], correct: 0 },
+        { question: 'Scratch (text input): Explain what a broadcast message does. (short answer)', type: 'text', correctTextEn: 'sends a message to other scripts to trigger actions', correctTextZh: '發送訊息給其他腳本以觸發動作' },
+        { question: 'Scratch (text input): Name one use of lists in Scratch.', type: 'text', correctTextEn: 'store multiple values|data storage|score list', correctTextZh: '儲存多個值|資料儲存|分數列表' }
+    ];
+    window.scratchQuestions = (Array.isArray(window.scratchQuestions) && window.scratchQuestions.length>0) ? window.scratchQuestions.concat(scratchAdd) : scratchAdd.slice();
+
+    // 2) generateScratchQuestions: minimal generator reusing existing renderOptions/renderTextInput
+    window.generateScratchQuestions = function(){
+        const bank = Array.isArray(window.scratchQuestions) ? window.scratchQuestions : [];
+        if (!bank.length) { console.warn('No scratch questions available'); return; }
+        // simple non-repeating selection
+        function shuffle(a){ const arr=a.slice(); for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
+        const picks = shuffle(Array.from({length: bank.length}, (_,i)=>i)).slice(0,5).map(i=>bank[i]);
+        // ensure globals expected by UI
+        window.currentQuestions = window.currentQuestions || [];
+        window.answeredQuestions = 0; window.levelScore = 0; window.correctAnswers = 0; window.totalQuestions = 5;
+        for (let i=0;i<4;i++){
+            const q = picks[i] || {question:'(題目暫缺)', options:['無'], correct:0};
+            const contentEl = document.getElementById('content'+(i+1));
+            const optContainer = document.getElementById('options'+(i+1));
+            window.currentQuestions[i] = { question: q.question || '', options: q.options || [], correctIndex: q.correct!==undefined? q.correct : 0, inputType: q.type==='text' || q.type==='text' ? 'text' : (Array.isArray(q.options) && q.options.length>0 ? 'multiple' : 'text') };
+            if (contentEl) contentEl.innerHTML = window.currentQuestions[i].question;
+            if (typeof window.renderOptions === 'function') window.renderOptions(optContainer, window.currentQuestions[i].options, i);
+            else if (window.currentQuestions[i].inputType==='text') window.renderTextInput(optContainer, i);
+        }
+        // bonus
+        const b = picks[4] || {question:'(額外挑戰暫缺)', options:[], correct:0};
+        window.currentQuestions[4] = { question: b.question, options: b.options||[], correctIndex: b.correct||0, inputType: Array.isArray(b.options)&&b.options.length>0 ? 'multiple' : 'text' };
+        const bonusContent = document.getElementById('bonusContent'); const bonusOptions = document.getElementById('bonusOptions'); if (bonusContent) bonusContent.innerHTML = window.currentQuestions[4].question; if (typeof window.renderOptions==='function') window.renderOptions(bonusOptions, window.currentQuestions[4].options, 4);
+        if (typeof window.updateScore==='function') window.updateScore();
+    };
+
+    // 3) Ensure Scratch category card exists and attach handler to all grids (and create if missing)
+    document.addEventListener('DOMContentLoaded', ()=>{
+        const grids = Array.from(document.querySelectorAll('.category-grid'));
+        if (!grids || grids.length===0) return;
+
+        function attachScratchHandler(card){
+            if (!card) return;
+            // avoid double-binding
+            if (card.__scratchHandlerAttached) return; card.__scratchHandlerAttached = true;
+            card.addEventListener('click', (ev)=>{
+                try{ ev&&ev.preventDefault&&ev.preventDefault(); }catch(e){}
+                const intro=document.getElementById('introScreen'); const categoryScreen=document.getElementById('categoryScreen'); const mathScreen=document.getElementById('mathKingScreen'); const gameScreen=document.getElementById('gameScreen'); if(intro) intro.style.display='none'; if(categoryScreen) categoryScreen.style.display='none'; if(mathScreen) mathScreen.style.display='none'; if(gameScreen) gameScreen.style.display='block';
+                window.selectedCategory='scratch'; const sel=document.getElementById('selectedCategoryName'); if(sel) sel.textContent='Scratch 遊戲製作'; const gameplayLabel=document.getElementById('selectedCategoryNameGameplay'); if(gameplayLabel) gameplayLabel.textContent='Scratch 遊戲製作';
+                if (typeof window.generateScratchQuestions==='function') try{ window.generateScratchQuestions(); }catch(e){console.warn(e);} 
+                if (typeof window.initGame==='function') try{ window.initGame(); }catch(e){}
+            }, { passive:false });
+        }
+
+        // ensure any existing [data-category="scratch"] cards have handlers
+        const existing = Array.from(document.querySelectorAll('[data-category="scratch"]'));
+        existing.forEach(attachScratchHandler);
+
+        // ensure each grid has a Scratch card (create if missing) and attach handler
+        grids.forEach(grid=>{
+            if (!grid.querySelector('[data-category="scratch"]')){
+                const card = document.createElement('div'); card.className='category-card'; card.setAttribute('data-category','scratch'); card.style.cursor='pointer'; card.innerHTML=`<div class="category-icon">🧩</div><h3>Scratch 遊戲製作</h3><p>認識積木、變數、列表、廣播與控制流程</p>`;
+                attachScratchHandler(card);
+                grid.appendChild(card);
+            }
+        });
+    });
+
+    // 3b) Add a small question bank for 香港茶餐廳及大牌檔/飲茶文化 and ensure a card is present
+    const teaAdd = [
+        { question: '香港茶餐廳：哪一款飲品常見於茶餐廳並以煉奶/淡奶調味？', options: ['絲襪奶茶','港式奶茶','柠檬茶','菊花茶'], correct: 1 },
+        { question: '飲茶文化：點心中「蝦餃」主要由哪種食材製作？', options: ['豬肉','蝦','牛肉','雞肉'], correct: 1 },
+        { question: '香港大牌檔：大牌檔通常是指哪種餐飲形式？', options: ['高檔餐廳','街邊小吃攤/檔','西式咖啡館','連鎖快餐店'], correct: 1 },
+        { question: '飲茶 (text): 用一句中文簡述「飲茶」的社交意義。', type:'text', correctTextZh: '聚會社交|家庭聚餐|朋友聚會' }
+    ];
+    try { window.teaQuestions = (Array.isArray(window.teaQuestions) ? window.teaQuestions.concat(teaAdd) : (window.teaQuestions||[]).concat(teaAdd)); } catch(e){ window.teaQuestions = teaAdd.slice(); }
+
+    // simple generator for tea culture questions (reuses renderOptions/renderTextInput if available)
+    window.generateTeaQuestions = function(){
+        const bank = Array.isArray(window.teaQuestions) ? window.teaQuestions : [];
+        if (!bank.length) { console.warn('No tea-culture questions available'); return; }
+        const picks = bank.slice(0,5); // take up to 5
+        window.currentQuestions = window.currentQuestions || [];
+        for (let i=0;i<4;i++){
+            const q = picks[i] || {question:'(題目暫缺)', options:['無'], correct:0};
+            const contentEl = document.getElementById('content'+(i+1));
+            const optContainer = document.getElementById('options'+(i+1));
+            window.currentQuestions[i] = { question: q.question || '', options: q.options || [], correctIndex: q.correct!==undefined? q.correct : 0, inputType: q.type==='text' ? 'text' : (Array.isArray(q.options) && q.options.length>0 ? 'multiple' : 'text') };
+            if (contentEl) contentEl.innerHTML = window.currentQuestions[i].question;
+            if (typeof window.renderOptions === 'function') window.renderOptions(optContainer, window.currentQuestions[i].options, i);
+            else if (window.currentQuestions[i].inputType==='text') window.renderTextInput(optContainer, i);
+        }
+        // bonus
+        const b = picks[4] || {question:'(額外挑戰暫缺)', options:[], correct:0};
+        window.currentQuestions[4] = { question: b.question, options: b.options||[], correctIndex: b.correct||0, inputType: Array.isArray(b.options)&&b.options.length>0 ? 'multiple' : 'text' };
+        const bonusContent = document.getElementById('bonusContent'); const bonusOptions = document.getElementById('bonusOptions'); if (bonusContent) bonusContent.innerHTML = window.currentQuestions[4].question; if (typeof window.renderOptions==='function') window.renderOptions(bonusOptions, window.currentQuestions[4].options, 4);
+        if (typeof window.updateScore==='function') window.updateScore();
+    };
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+        const grids = Array.from(document.querySelectorAll('.category-grid'));
+        if (!grids || grids.length===0) return;
+        function attachTeaHandler(card){
+            if (!card) return; if (card.__teaHandlerAttached) return; card.__teaHandlerAttached=true;
+            card.addEventListener('click', (ev)=>{
+                try{ ev&&ev.preventDefault&&ev.preventDefault(); }catch(e){}
+                const intro=document.getElementById('introScreen'); const categoryScreen=document.getElementById('categoryScreen'); const mathScreen=document.getElementById('mathKingScreen'); const gameScreen=document.getElementById('gameScreen'); if(intro) intro.style.display='none'; if(categoryScreen) categoryScreen.style.display='none'; if(mathScreen) mathScreen.style.display='none'; if(gameScreen) gameScreen.style.display='block';
+                window.selectedCategory='tea-culture'; const sel=document.getElementById('selectedCategoryName'); if(sel) sel.textContent='香港茶餐廳及大牌檔/飲茶文化'; const gameplayLabel=document.getElementById('selectedCategoryNameGameplay'); if(gameplayLabel) gameplayLabel.textContent='香港茶餐廳及大牌檔/飲茶文化';
+                // if a category-specific generator exists, call it; otherwise fall back to general generator
+                if (typeof window.generateTeaQuestions==='function') try{ window.generateTeaQuestions(); }catch(e){console.warn(e);} 
+                else if (typeof window.generateQuestions==='function') try{ window.generateQuestions(); }catch(e){console.warn(e);} 
+                if (typeof window.initGame==='function') try{ window.initGame(); }catch(e){}
+            }, { passive:false });
+        }
+        // attach to existing cards or create one for each grid
+        grids.forEach(grid=>{
+            let card = grid.querySelector('[data-category="tea-culture"]');
+            if (!card){
+                card = document.createElement('div'); card.className='category-card'; card.setAttribute('data-category','tea-culture'); card.style.cursor='pointer'; card.innerHTML=`<div class="category-icon">🍵</div><h3>香港茶餐廳及大牌檔/飲茶文化</h3><p>了解港式茶餐廳與飲茶文化、點心與街坊小吃</p>`;
+                grid.appendChild(card);
+            }
+            attachTeaHandler(card);
+        });
+    });
+
+    // 4) Cangjie training additions (non-destructive)
+    const cangjieAdd = [
+        { question: '倉頡：請拆解「明」字並輸入對應倉頡碼（速成示例）', type:'text', correctTextZh: '日月', correctTexts:['明'] },
+        { question: '倉頡：部首「木」通常對應鍵位？(速成/倉頡)', options: ['木->木部鍵', '月->月部鍵','水->水部鍵','人->人部鍵'], correct: 0 },
+        { question: '倉頡 (text): 簡述倉頡與速成的主要區別。', type:'text', correctTextEn: 'cangjie uses full component shapes while quick uses simplified stroke groups', correctTextZh: '倉頡以字形部件拆字，速成以筆畫或簡化部件' }
+    ];
+    // merge into global cangjieQuestions if possible
+    try { window.cangjieQuestions = (Array.isArray(window.cangjieQuestions) ? window.cangjieQuestions.concat(cangjieAdd) : (window.cangjieQuestions||[]).concat(cangjieAdd)); } catch(e){ window.cangjieQuestions = cangjieAdd.slice(); }
+
+    // When user selects cangjie category, ensure generateQuestions picks it up by merging into expected var
+    // Also attach a defensive card handler in case original card lacks handler
+    document.addEventListener('DOMContentLoaded', ()=>{
+        const card = document.querySelector('[data-category="cangjie"]');
+        if (card) {
+            card.addEventListener('click', (ev)=>{
+                try{ ev&&ev.preventDefault&&ev.preventDefault(); }catch(e){}
+                // ensure global has cangjieQuestions
+                window.cangjieQuestions = window.cangjieQuestions || [];
+                const intro=document.getElementById('introScreen'); const categoryScreen=document.getElementById('categoryScreen'); const mathScreen=document.getElementById('mathKingScreen'); const gameScreen=document.getElementById('gameScreen'); if(intro) intro.style.display='none'; if(categoryScreen) categoryScreen.style.display='none'; if(mathScreen) mathScreen.style.display='none'; if(gameScreen) gameScreen.style.display='block';
+                window.selectedCategory='cangjie'; const sel=document.getElementById('selectedCategoryName'); if(sel) sel.textContent='倉頡速成訓練及教學'; const gameplayLabel=document.getElementById('selectedCategoryNameGameplay'); if(gameplayLabel) gameplayLabel.textContent='倉頡速成訓練及教學';
+                if (typeof window.generateQuestions==='function') try{ window.generateQuestions(); }catch(e){console.warn(e);} 
+                if (typeof window.initGame==='function') try{ window.initGame(); }catch(e){}
+            }, { passive:false });
+        }
+    });
+
+    // 5) Expand mathKingQuestions (append non-destructively)
+    const extraMath = [
+        // 有向數
+        { category: '中一', question: '有向數：-7 + 4 = ?', options: ['-3','3','11','-11'], correct: 0 },
+        { category: '中一', question: '有向數：5 - (-2) = ?', options: ['7','3','-7','-3'], correct: 0 },
+        // 代數式和方程式
+        { category: '中二', question: '解方程：2x + 3 = 11，x = ?', options: ['4','3','2','5'], correct: 0 },
+        { category: '中二', question: '化簡代數式：3a + 4a = ?', options: ['7a','12a','a','-a'], correct: 0 },
+        // 指數及進制
+        { category: '中三', question: '指數：2^5 = ?', options: ['32','10','25','16'], correct: 0 },
+        { category: '中三', question: '二進制 1010 等於十進制多少？', options: ['10','8','12','5'], correct: 0 },
+        // 多項式
+        { category: '中二', question: '多項式相加： (x^2 + 2x) + (3x^2 - x) = ?', options: ['4x^2 + x','x^2 + x','2x^2 + x','4x^2 + x?'], correct: 0 },
+        // 百分法
+        { category: '中二', question: '百分法：20 的 15% 是多少？', options: ['3','2','30','0.3'], correct: 0 },
+        // 近似值與估算
+        { category: '中二', question: '估算：7.98 ≈ ?', options: ['8.0','7.9','7.0','8.5'], correct: 0 },
+        // 幾何簡介
+        { category: '中一', question: '三角形內角和是多少度？', options: ['180°','90°','360°','270°'], correct: 0 },
+        // 對稱及變換
+        { category: '中一', question: '哪一種變換會將形狀左右翻轉？', options: ['Reflection | 鏡射','Translation | 平移','Rotation | 旋轉','Dilation | 放大縮小'], correct: 0 },
+        // 全等及相似
+        { category: '中二', question: '相似三角形主要是檢查什麼？', options: ['角相等與邊成比例','面積相同','邊長相同','沒有交集'], correct: 0 },
+        // 量度方面的估計
+        { category: '中一', question: '估計量度：一張 A4 紙大約是多少毫米寬？', options: ['210 mm','297 mm','148 mm','420 mm'], correct: 0 },
+        // 面積及體積
+        { category: '中二', question: '矩形面積公式是？', options: ['長 × 寬','長 + 寬','2 × (長 + 寬)','長 ÷ 寬'], correct: 0 },
+        { category: '中三', question: '正方體體積公式是？', options: ['邊長^3','邊長^2','6 × 邊長^2','4 × 邊長'], correct: 0 },
+        // 坐標簡介
+        { category: '中一', question: '座標點 (3, -2) 在哪個象限？', options: ['四象限 (x>0,y<0) | Quadrant IV','一象限','二象限','三象限'], correct: 0 },
+        // 統計簡介
+        { category: '中二', question: '算術平均數 (mean) 的計算方法是？', options: ['總和除以數量','列出所有值','找中位數','取最大值'], correct: 0 }
+    ];
+    try { window.mathKingQuestions = Array.isArray(window.mathKingQuestions) ? window.mathKingQuestions.concat(extraMath) : extraMath.slice(); } catch(e){ window.mathKingQuestions = extraMath.slice(); }
+
+    console.info('Injected Scratch, Cangjie, and Math expansions');
+})();
+</script>
+
+<!-- Loader: fetch external data/*.json and merge non-destructively into in-page banks -->
+<script>
+(function(){
+    const dataFiles = [
+        { url: 'data/english-learning.json', varName: 'englishLearningQuestions' },
+        { url: 'data/scratch.json', varName: 'scratchQuestions' },
+        { url: 'data/cangjie.json', varName: 'cangjieQuestions' },
+        { url: 'data/math-king.json', varName: 'mathKingQuestions' }
+    ];
+
+    async function loadAndMerge() {
+        for (const f of dataFiles) {
+            try {
+                const resp = await fetch(f.url);
+                if (!resp.ok) { console.info('No external file:', f.url); continue; }
+                const arr = await resp.json();
+                if (!Array.isArray(arr)) continue;
+                window[f.varName] = Array.isArray(window[f.varName]) ? window[f.varName] : [];
+                const seen = new Set(window[f.varName].map(q => (q.question||'').trim()));
+                const toAdd = [];
+                arr.forEach(q => { const key = (q.question||'').trim(); if (!seen.has(key)) { seen.add(key); toAdd.push(q); } });
+                if (toAdd.length) {
+                    window[f.varName] = window[f.varName].concat(toAdd);
+                    console.info('Merged', toAdd.length, 'questions into', f.varName);
+                }
+            } catch (e) {
+                console.warn('Failed to fetch/merge', f.url, e);
+            }
+        }
+    }
+
+    if (typeof window.addEventListener === 'function') {
+        window.addEventListener('DOMContentLoaded', ()=>{ loadAndMerge().catch(e=>console.warn(e)); });
+    } else {
+        loadAndMerge().catch(e=>console.warn(e));
+    }
 })();
 </script>
 
