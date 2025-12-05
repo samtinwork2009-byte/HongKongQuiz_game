@@ -1,15 +1,465 @@
-
-
-<!DOCTYPE html><html lang="zh-Hant"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
-    <meta name="x-poe-datastore-behavior" content="local_only">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
-    <meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="真•香港人問答及猜謎遊戲 — 科技、生活、學習多類別互動問答平台。">
-    <meta name="theme-color" content="#0a0e17">
-    <title>智能手機猜謎遊戲 | TechQuiz</title>
+    <title>真•香港人問答遊戲 - 登入User Name</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
+:root {
+            --neon-cyan: #00f0ff;
+            --neon-pink: #ff006e;
+            --neon-yellow: #ffbe0b;
+            --dark-1: #0a0e17;
+            --dark-2: #141824;
+            --dark-3: #1e2433;
+            --glass: rgba(30, 36, 51, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans HK', sans-serif;
+            min-height: 100vh;
+            background: var(--dark-1);
+            position: relative;
+        }
+
+        /* Login page layout */
+        #loginSection {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .bg-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(var(--neon-cyan) 1px, transparent 1px),
+                linear-gradient(90deg, var(--neon-cyan) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.03;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--neon-cyan);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--neon-pink);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 2s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--neon-yellow);
+            top: 50%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Login container */
+        .login-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 440px;
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 50px 40px;
+            backdrop-filter: blur(20px);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo area */
+        .logo-area {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-area h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink), var(--neon-yellow));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .logo-area p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Input fields */
+        .input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            height: 56px;
+            background: var(--dark-2);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0 50px 0 20px;
+            font-size: 16px;
+            color: #fff;
+            font-family: 'Noto Sans HK', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.1);
+            outline: none;
+        }
+
+        .input-wrapper input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .input-icon:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Remember & Forgot */
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            font-size: 14px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            cursor: pointer;
+            accent-color: var(--neon-cyan);
+        }
+
+        .forgot-link {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-link:hover {
+            color: var(--neon-pink);
+        }
+
+        /* Login button */
+        .login-btn {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 240, 255, 0.6);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 32px 0;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider::before {
+            margin-right: 16px;
+        }
+
+        .divider::after {
+            margin-left: 16px;
+        }
+
+        /* Social login */
+        .social-login {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-btn {
+            flex: 1;
+            height: 48px;
+            background: var(--dark-2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-btn i {
+            font-size: 20px;
+        }
+
+        .social-btn:hover {
+            background: var(--dark-3);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Error message */
+        .error-message {
+            background: rgba(255, 0, 110, 0.1);
+            border: 1px solid var(--neon-pink);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            color: var(--neon-pink);
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            animation: shake 0.3s ease;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Loading state */
+        .login-btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .login-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 40px 28px;
+            }
+
+            .logo-area h1 {
+                font-size: 28px;
+            }
+
+            .logo-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 35px;
+            }
+
+            .social-login {
+                flex-direction: column;
+            }
+
+            .input-wrapper input,
+            .login-btn {
+                height: 52px;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color-scheme: dark;
+            }
+        }
+
+        /* ========== GAME CSS ========== */
         :root {
             --primary: #0a0e17;
             --secondary: #131a2d;
@@ -1635,10 +2085,129 @@
                 min-width: 0 !important;
             }
         }
+
+        /* ========== SHOW/HIDE LOGIC ========== */
+        #loginSection {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #gameSection {
+            display: none;
+        }
+
+        body.game-mode #loginSection {
+            display: none !important;
+        }
+
+        body.game-mode #gameSection {
+            display: block !important;
+        }
+
+        body.game-mode {
+            display: block !important;
+            align-items: initial !important;
+            justify-content: initial !important;
+            padding: 20px !important;
+            overflow-x: hidden !important;
+        }
     </style>
-    <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script>
-    <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script></head>
+</head>
 <body>
+    <!-- ========== LOGIN SECTION ========== -->
+    <div id="loginSection">
+    <div class="bg-animation">
+        <div class="bg-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Login container -->
+    <div class="login-container">
+        <div class="logo-area">
+            <div class="logo-icon">🇭🇰</div>
+            <h1>真•香港人問答遊戲</h1>
+            <p>添加你的遊戲用戶名</p>
+        </div>
+
+        <form id="loginForm">
+            <!-- Error message -->
+            <div class="error-message" id="errorMessage">
+                <i class="ri-error-warning-fill"></i>
+                <span id="errorText">用戶名稱或密碼錯誤</span>
+            </div>
+
+            <!-- Username -->
+            <div class="input-group">
+                <label for="username">玩家名稱 User Name</label>
+                <div class="input-wrapper">
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="請輸入用戶名稱"
+                        required
+                        autocomplete="username"
+                    >
+                    <i class="ri-user-fill input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="input-group">
+                <label for="password">密碼 Password</label>
+                <div class="input-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="請輸入密碼"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <i class="ri-eye-off-fill input-icon" id="togglePassword"></i>
+                </div>
+            </div>
+
+            <!-- Remember & Forgot -->
+            <div class="form-options">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" id="remember" >
+                    <span>儲存此密碼</span>
+                </label>
+                <a href="#" class="forgot-link">忘記密碼?</a>
+            </div>
+
+            <!-- Login button -->
+            <button type="submit" class="login-btn" id="loginBtn">
+                登入 LOGIN
+            </button>
+
+            <!-- Divider -->
+            <div class="divider">或使用社交媒體登入</div>
+
+            <!-- Social login -->
+            <div class="social-login">
+                <a href="#" class="social-btn">
+                    <i class="ri-google-fill"></i>
+                    <span>Google</span>
+                </a>
+                <a href="#" class="social-btn">
+                    <i class="ri-facebook-fill"></i>
+                    <span>Facebook</span>
+                </a>
+            </div>
+        </form>
+    </div>
+
+    </div>
+    
+    <!-- ============ GAME SECTION ============ -->
+
+    <!-- ========== GAME SECTION ========== -->
+    <div id="gameSection">
     <a class="skip-link" href="#mainContent" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;">跳至主要內容</a>
     <!-- 簡介頁面 -->
     <main id="mainContent" role="main">
@@ -2188,6 +2757,275 @@
             <button class="back-to-intro-btn" id="backToIntroBtn">返回主頁</button>
         </div>
     </div>
+
+    <!-- 遊戲主畫面 -->
+    <div class="game-screen" id="gameScreen" style="display: none;">
+        <div class="container">
+            <header>
+                <div class="logo">
+                    <div class="logo-icon">HK</div>
+                    <div class="logo-text">Hong Kong Quiz Game</div>
+                </div>
+                <div class="score-board">
+                    <div>分數: <span class="score" id="score">0</span></div>
+                    <div class="level-score">本關卡: <span id="levelScore">&nbsp;</span> 55分</div>
+                    <div style="color: #ffd700; font-weight: bold; margin-top: 5px;">金幣: $<span id="coinsDisplay">0</span>$</div>
+                </div>
+            </header>
+
+            <!-- 进度条 -->
+            <div class="progress-container">
+                <div class="progress-header">
+                    <div class="progress-title">
+                        <span>🎯</span>
+                        <span>遊戲進度</span>
+                    </div>
+                    <div class="progress-stats">
+                        已完成 <span id="answeredCount">0</span> / <span id="totalCount">5</span> 題
+                    </div>
+                </div>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+                    <div class="progress-percentage" id="progressPercentage">0%</div>
+                </div>
+            </div>
+
+            <!-- 倒计时器 -->
+            <div class="timer-container" id="timerContainer">
+                <div class="timer-icon">⏱️</div>
+                <div class="timer-display">
+                    <div class="timer-label">剩餘時間</div>
+                    <div class="timer-value" id="timerValue">25</div>
+                    <div class="timer-unit">秒</div>
+                </div>
+                <div class="timer-progress-ring">
+                    <svg width="80" height="80">
+                        <circle cx="40" cy="40" r="36" class="timer-ring-bg"></circle>
+                        <circle cx="40" cy="40" r="36" class="timer-ring-fill" id="timerRingFill"></circle>
+                    </svg>
+                </div>
+            </div>
+
+        <div class="level-indicator">
+            <div class="level active" data-level="1">
+                <div class="level-number">關卡 1</div>
+                <div class="level-difficulty">新手級</div>
+            </div>
+            <div class="level" data-level="2">
+                <div class="level-number">關卡 2</div>
+                <div class="level-difficulty">入門級</div>
+            </div>
+            <div class="level" data-level="3">
+                <div class="level-number">關卡 3</div>
+                <div class="level-difficulty">學徒級</div>
+            </div>
+            <div class="level" data-level="4">
+                <div class="level-number">關卡 4</div>
+                <div class="level-difficulty">進階級</div>
+            </div>
+            <div class="level" data-level="5">
+                <div class="level-number">關卡 5</div>
+                <div class="level-difficulty">熟手級</div>
+            </div>
+            <div class="level" data-level="6">
+                <div class="level-number">關卡 6</div>
+                <div class="level-difficulty">專家級</div>
+            </div>
+            <div class="level" data-level="7">
+                <div class="level-number">關卡 7</div>
+                <div class="level-difficulty">精英級</div>
+            </div>
+            <div class="level" data-level="8">
+                <div class="level-number">關卡 8</div>
+                <div class="level-difficulty">大師級</div>
+            </div>
+            <div class="level" data-level="9">
+                <div class="level-number">關卡 9</div>
+                <div class="level-difficulty">高手級</div>
+            </div>
+            <div class="level" data-level="10">
+                <div class="level-number">關卡 10</div>
+                <div class="level-difficulty">達人級</div>
+            </div>
+            <div class="level" data-level="11">
+                <div class="level-number">關卡 11</div>
+                <div class="level-difficulty">資深級</div>
+            </div>
+            <div class="level" data-level="12">
+                <div class="level-number">關卡 12</div>
+                <div class="level-difficulty">專業級</div>
+            </div>
+            <div class="level" data-level="13">
+                <div class="level-number">關卡 13</div>
+                <div class="level-difficulty">傳奇級</div>
+            </div>
+            <div class="level" data-level="14">
+                <div class="level-number">關卡 14</div>
+                <div class="level-difficulty">超神級</div>
+            </div>
+            <div class="level" data-level="15">
+                <div class="level-number">關卡 15</div>
+                <div class="level-difficulty">專精級</div>
+            </div>
+            <div class="level" data-level="16">
+                <div class="level-number">關卡 16</div>
+                <div class="level-difficulty">頂尖級</div>
+            </div>
+            <div class="level" data-level="17">
+                <div class="level-number">關卡 17</div>
+                <div class="level-difficulty">無敵級</div>
+            </div>
+            <div class="level" data-level="18">
+                <div class="level-number">關卡 18</div>
+                <div class="level-difficulty">傳說級</div>
+            </div>
+            <div class="level" data-level="19">
+                <div class="level-number">關卡 19</div>
+                <div class="level-difficulty">巔峰級</div>
+            </div>
+            <div class="level" data-level="20">
+                <div class="level-number">關卡 20</div>
+                <div class="level-difficulty">終極大師</div>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <div class="challenge-card" id="challenge1">
+                <div class="challenge-header">
+                    <div class="challenge-title">規格猜型號</div>
+                    <div class="challenge-points">+10 分</div>
+                </div>
+                <div class="challenge-content" id="content1">
+                    <!-- 題目內容將由JavaScript動態生成 -->
+                </div>
+                <div class="options" id="options1">
+                    <!-- 選項將由JavaScript動態生成 -->
+                </div>
+            </div>
+            
+            <div class="challenge-card" id="challenge2">
+                <div class="challenge-header">
+                    <div class="challenge-title">型號猜規格</div>
+                    <div class="challenge-points">+10 分</div>
+                </div>
+                <div class="challenge-content" id="content2">
+                    <!-- 題目內容將由JavaScript動態生成 -->
+                </div>
+                <div class="options" id="options2">
+                    <!-- 選項將由JavaScript動態生成 -->
+                </div>
+            </div>
+            
+            <div class="challenge-card" id="challenge3">
+                <div class="challenge-header">
+                    <div class="challenge-title">年份與價格</div>
+                    <div class="challenge-points">+10 分</div>
+                </div>
+                <div class="challenge-content" id="content3">
+                    <!-- 題目內容將由JavaScript動態生成 -->
+                </div>
+                <div class="options" id="options3">
+                    <!-- 選項將由JavaScript動態生成 -->
+                </div>
+            </div>
+            
+            <div class="challenge-card" id="challenge4">
+                <div class="challenge-header">
+                    <div class="challenge-title">作業系統版本</div>
+                    <div class="challenge-points">+10 分</div>
+                </div>
+                <div class="challenge-content" id="content4">
+                    <!-- 題目內容將由JavaScript動態生成 -->
+                </div>
+                <div class="options" id="options4">
+                    <!-- 選項將由JavaScript動態生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="bonus-challenge" id="bonusChallenge">
+            <div class="bonus-header">
+                <div class="bonus-title">額外挑戰</div>
+                <div class="bonus-points">+15 分</div>
+            </div>
+            <div class="challenge-content" id="bonusContent">
+                <!--    目內容將由JavaScript動態生成 -->
+            </div>
+            <div class="options" id="bonusOptions">
+                <!-- 選項將由JavaScript動態生成 -->
+            </div>
+        </div>
+        
+            <div class="controls">
+                <button id="backToHomeBtn">返回到主頁</button>
+
+                <!-- 遊戲平台工具包 -->
+                <div style="margin: 15px 0; padding: 15px; background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 130, 0.1)); border: 2px solid rgba(138, 43, 226, 0.5); border-radius: 12px;">
+                    <div style="font-size: 18px; font-weight: bold; color: #da70d6; margin-bottom: 12px; text-align: center;">
+                        🎮 遊戲平台工具包
+                    </div>
+
+                    <!-- 挑戰加速器 -->
+                    <div style="margin-bottom: 15px; padding: 12px; background: rgba(0, 168, 255, 0.1); border: 2px solid rgba(0, 168, 255, 0.4); border-radius: 8px;">
+                        <div style="font-size: 16px; font-weight: bold; color: #4cd0ff; margin-bottom: 8px; text-align: center;">
+                            ⚡ 挑戰加速器
+                        </div>
+                        <div style="font-size: 12px; color: #b0b0b0; line-height: 1.5; margin-bottom: 10px; text-align: center;">
+                            購買加速器跳過關卡，節省時間直達高難度挑戰！<br>
+                            <span style="color: #ff8c00; font-weight: bold;">注意：跳過的關卡不計分，不增加金幣</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 10px;">
+                            <button id="accelerator1Btn" class="accelerator-btn" data-cost="300" data-skip="2" style="background: linear-gradient(135deg, #4cd0ff 0%, #00a8ff 100%); color: #fff; font-weight: bold; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.3s;">
+                                ⭐ 輕度加速 - 300金幣 (跳2關)
+                            </button>
+                            <button id="accelerator2Btn" class="accelerator-btn" data-cost="550" data-skip="3" style="background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%); color: #fff; font-weight: bold; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.3s;">
+                                🚀 標準加速 - 550金幣 (跳3關)
+                            </button>
+                            <button id="accelerator3Btn" class="accelerator-btn" data-cost="1000" data-skip="5" style="background: linear-gradient(135deg, #ff3750 0%, #ff1744 100%); color: #fff; font-weight: bold; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.3s;">
+                                ⚡ 極速加速 - 1000金幣 (跳5關)
+                            </button>
+                        </div>
+                        <div style="font-size: 11px; color: #808080; line-height: 1.4; text-align: center;">
+                            💰 賺取所需題數參考：<br>
+                            輕度 (300💰) ≈30題基礎 | 標準 (550💰) ≈55題基礎 | 極速 (1000💰) ≈100題基礎
+                        </div>
+                    </div>
+
+                    
+                
+            </div>
+        
+
+        <div class="result-modal" id="resultModal">
+            <div class="modal-content">
+                <div class="modal-title" id="modalTitle">關卡完成!</div>
+                <div class="modal-message" id="modalMessage">你成功完成了這個關卡!</div>
+                <div class="modal-score" id="modalScore">+50 分</div>
+                <div id="retryButtonContainer" style="display: none; margin-top: 15px;">
+                    <button id="retryLevelBtn" style="background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%); margin-bottom: 10px;">重做本關 (一次機會)</button>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:12px; justify-content:center; flex-wrap:wrap;">
+                    <button id="shareScoreBtn" style="background: linear-gradient(135deg, #00a8ff 0%, #4cd0ff 100%); color: #fff; font-weight: bold; padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer;">📸 分享成績</button>
+                    <button id="nextLevelBtn" disabled="" style="background: linear-gradient(135deg, #28a745 0%, #3ad76b 100%); color: #fff; font-weight: bold; padding: 10px 18px; border: none; border-radius: 8px;">前往下一關</button>
+                    <button id="closeModalBtn">繼續</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 连击计数器 -->
+        <div class="combo-container" id="comboContainer">
+            <div class="combo-display">
+                <div class="combo-number" id="comboNumber">0</div>
+                <div class="combo-text">
+                    <span class="combo-fire">🔥</span>
+                    COMBO
+                    <span class="combo-fire">🔥</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
 
     <!-- 遊戲主畫面 -->
     <div class="game-screen" id="gameScreen" style="display: none;">
@@ -4539,7 +5377,7 @@
         const backendQuestions = [
             { question: "Python 常用於後端開發的框架是哪一個？", options: ["Django", "React", "Vue", "Sass"], correct: 0 },
             { question: "Linux 中查看目前目錄列表的指令是？", options: ["ls", "dir", "list", "show"], correct: 0 },
-            { question: "C++ 常用於哪類應用？", options: ["系統程式與效能敏感應用", "純前端樣式", "資料庫配置", "雲端部署管理"], correct: 0 }
+            { question: "C++ 常用於哪類應用？", options: ["系統程式與效   敏感應用", "純前端樣式", "資料庫配置", "雲端部署管理"], correct: 0 }
         ];
 
     // AI 題庫（AI, ML, LLMs, Ethics 等） - 額外題庫 (aiQuestionsExtraLocal)
@@ -4608,7 +5446,7 @@
             { category: "記憶體", question: "DDR5 記憶體的標準電壓是多少?", options: ["1.2V", "1.35V", "1.1V", "1.5V"], correct: 2 },
             { category: "記憶體", question: "以下哪種記憶體速度最快?", options: ["DDR4-3200", "DDR5-4800", "DDR4-3600", "DDR5-5600"], correct: 3 },
             { category: "記憶體", question: "一般遊戲電腦建議配備多少記憶體?", options: ["8GB", "16GB", "32GB", "64GB"], correct: 1 },
-            { category: "記憶體", question: "ECC記憶體主要用於什麼場景?", options: ["遊戲", "伺服器", "辦公", "圖形設   "], correct: 1 },
+            { category: "記憶體", question: "ECC記憶體主要用於什麼場景?", options: ["   戲", "伺服器", "辦公", "圖形設   "], correct: 1 },
             { category: "記憶體", question: "雙通道記憶體相比單通道有什麼優勢?", options: ["更低延遲", "更高記憶體頻寬", "更低功耗", "更高容量"], correct: 1 },
 
             // 儲存裝置
@@ -4730,7 +5568,7 @@
 
             // Cisco Packet Tracer 相關
             { category: "Cisco", question: "Cisco Packet Tracer主要用於?", options: ["編程開發", "網絡模擬", "圖像處理", "視頻編輯"], correct: 1 },
-            { category: "Cisco", question: "在Packet Tracer中,直通線(Straight-Through)用於連接?", options: ["電腦到路由器", "電腦到交換器", "交換器到交換器", "路由器到路由器"], correct: 1 },
+            { category: "Cisco", question: "在Packet Tracer中,直通線(Straight-Through)用於連接?", options: ["電腦到路由器", "電腦到交換器", "交換器到交換器", "路   器到路由器"], correct: 1 },
             { category: "Cisco", question: "交叉線(Crossover)用於連接?", options: ["電腦到交換器", "同類設備", "電腦到路由器", "路由器到數據機"], correct: 1 },
             { category: "Cisco", question: "Router的主要功能是?", options: ["放大信號", "連接不同網絡", "提供Wi-Fi", "儲存數據"], correct: 1 },
             { category: "Cisco", question: "Switch   主要功能是?", options: ["路由選擇", "連接局域網設備", "提供互聯網", "防火牆"], correct: 1 },
@@ -4884,7 +5722,7 @@
             // AI編程工具
             { category: "AI編程", question: "GitHub Copilot基於什麼模型?", options: ["GPT", "Codex", "BERT", "T5"], correct: 1 },
             { category: "AI編程", question: "Tabnine的主要功能是?", options: ["代碼審查", "代碼自動補全", "測試生成", "文檔生成"], correct: 1 },
-            { category: "AI編程", question: "Amazon CodeWhisperer支持哪些IDE?", options: ["只有VS Code", "多種IDE", "只有IntelliJ", "不支持IDE"], correct: 1 },
+            { category: "AI編程", question: "Amazon CodeWhisperer支持   些IDE?", options: ["只有VS Code", "多種IDE", "只有IntelliJ", "不支持IDE"], correct: 1 },
             { category: "AI編程", question: "Cursor編輯器的特點是?", options: ["只能寫Python", "集成AI輔助編程", "只用於前端", "免費開源"], correct: 1 },
             { category: "AI編程", question: "Replit Ghostwriter可以?", options: ["只能補全代碼", "補全和生成代碼", "只能運行代碼", "只能調試"], correct: 1 },
 
@@ -5015,7 +5853,7 @@
             // C++基礎
             { category: "C++", question: "C++是由誰創建的?", options: ["Dennis Ritchie", "Bjarne Stroustrup", "Ken Thompson", "Linus Torvalds"], correct: 1 },
             { category: "C++", question: "C++11引入了哪個重要特性?", options: ["類", "指針", "auto關鍵字", "結構體"], correct: 2 },
-            { category: "C++", question: "std::vector和數組的主要區別是?", options: ["速度", "vector可動態調整大小", "佔用內存", "語法"], correct: 1 },
+            { category: "C++", question: "std::vector和數組的主要區別是?", options: ["速度", "vector可動態調整大小", "佔用   存", "語法"], correct: 1 },
             { category: "C++", question: "智能指針的主要優勢是?", options: ["運行更快", "自動內存管理", "佔用更少內存", "語法更簡單"], correct: 1 },
             { category: "C++", question: "虛函數(Virtual Function)的作用是?", options: ["提高性能", "實現多態", "節省內存", "簡化代碼"], correct: 1 },
             { category: "C++", question: "C++中的RAII是什麼?", options: ["設計模式", "資源獲取即初始化", "編譯器優化", "調試工具"], correct: 1 },
@@ -5276,7 +6114,7 @@
             // 遊戲開發
             { category: "遊戲開發", question: "Unity使用什麼語言?", options: ["Java", "C#", "Python", "Ruby"], correct: 1 },
             { category: "遊戲開發", question: "Unreal Engine主要使用什麼語   ?", options: ["Java", "Python", "C++", "JavaScript"], correct: 2 },
-            { category: "遊戲開發", question: "Godot Engine是什麼?", options: ["付費引擎", "開源遊戲引擎", "圖像編輯器", "音頻軟件"], correct: 1 },
+            { category: "遊戲開發", question: "Godot Engine是什麼?", options: ["付費引擎", "開源   戲引擎", "圖像編輯器", "音頻軟件"], correct: 1 },
             { category: "遊戲開發", question: "遊戲開發中的FPS是什麼?", options: ["First Person Shooter", "Frames Per Second", "以上皆是", "File Processing System"], correct: 2 },
             { category: "遊戲開發", question: "遊戲物理引擎用於?", options: ["美化畫面", "模擬真實物理", "播放音頻", "網絡通信"], correct: 1 },
 
@@ -5304,7 +6142,7 @@
 
             // 區塊鏈基礎
             { category: "區塊鏈", question: "比特幣是在哪一年誕生?", options: ["2007", "2009", "2011", "2013"], correct: 1 },
-            { category: "區塊鏈", question: "區塊鏈的主要特點是?", options: ["中心化", "去中心化和不可篡改", "可隨意修改", "需要管理員"], correct: 1 },
+            { category: "區塊鏈", question: "區   鏈的主要特點是?", options: ["中心化", "去中心化和不可篡改", "可隨意修改", "需要管理員"], correct: 1 },
             { category: "區塊鏈", question: "以太坊的智能合約使用什麼語言?", options: ["JavaScript", "Python", "Solidity", "Java"], correct: 2 },
             { category: "區塊鏈", question: "挖礦的主要作用是?", options: ["破解密碼", "驗證交易並生成新區塊", "刪除數據", "加密文件"], correct: 1 },
             { category: "區塊鏈", question: "NFT的全稱是?", options: ["New File Transfer", "Non-Fungible Token", "Network File Token", "Next Finance Technology"], correct: 1 },
@@ -5416,7 +6254,7 @@
             { category: "防毒軟件", question: "特徵碼檢測的局限性是?", options: ["太慢", "無法檢測新病毒", "太貴", "太複雜"], correct: 1 },
             { category: "防毒軟件", question: "啟發式檢測的原理是?", options: ["特徵碼匹配", "行為分析", "文件大小", "文件類型"], correct: 1 },
             { category: "防毒軟件", question: "沙箱(Sandbox)技術的作用是?", options: ["加速運行", "隔離執行可疑程序", "壓縮文件", "加密數據"], correct: 1 },
-            { category: "防毒軟件", question: "實時保護的優勢是?", options: ["更省資源", "即時檢測威脅", "更便宜", "更簡單"], correct: 1 },
+            { category: "防毒軟件", question: "實時保護的優勢是?", options: ["更省資源", "即時檢測威脅", "   便宜", "更簡單"], correct: 1 },
             { category: "防毒軟件", question: "誤報(False Positive)是指?", options: ["漏掉病毒", "將正常文件判為   毒", "無法啟動", "掃描太慢"], correct: 1 },
             { category: "防毒軟件", question: "雲查殺的優勢是?", options: ["離線可用", "病毒庫更新及時", "更快", "更小"], correct: 1 },
             { category: "防毒軟件", question: "隔離區(Quarantine)的作用是?", options: ["刪除文件", "安全隔離可疑文件", "壓縮文件", "加密文件"], correct: 1 },
@@ -5499,7 +6337,7 @@
             // Oracle 數據類型
             { category: "Oracle數據類型", question: "VARCHAR2(2)的意思是?", options: ["固定2字符", "最多存儲2字節的可變長字符串", "2個VARCHAR", "2位數字"], correct: 1 },
             { category: "Oracle數據類型", question: "VARCHAR2和VARCHAR的區別是?", options: ["完全相同", "VARCHAR2是Oracle推薦使用的", "VARCHAR更好", "沒有VARCHAR"], correct: 1 },
-            { category: "Oracle數據類型", question: "CHAR(10)和VARCHAR2(10)的主要區別是?", options: ["沒區別", "CHAR固定長度會補空格", "VARCHAR2可變長度", "CHAR可變長度"], correct: 1 },
+            { category: "Oracle數據類型", question: "CHAR(10)和VARCHAR2(10)的主要區別是?", options: ["沒區別", "CHAR固定長度會補空格", "VARCHAR2可變長度", "CHAR可變長   "], correct: 1 },
             { category: "Oracle數據類型", question: "NUMBER數據類作用於存儲?", options: ["文本", "數字(整數和   數)", "日期", "二進制"], correct: 1 },
             { category: "Oracle數據類型", question: "NUMBER(5,2)表示什麼?", options: ["5位整數2位小數", "總共5位數字其中2位小數", "5+2=7位數字", "5除以2"], correct: 1 },
             { category: "Oracle數據類型", question: "DATE數據類型存儲什麼?", options: ["只有日期", "日期和時間", "只有時間", "時區"], correct: 1 },
@@ -5554,7 +6392,7 @@
             { category: "Windows", question: "磁碟碎片整理對SSD是否有幫助?", options: ["很有幫助", "沒幫助且會減少壽命", "稍有幫助", "必須進行"], correct: 1 },
             { category: "Windows", question: "Windows的虛擬內存是什麼?", options: ["RAM擴展", "硬碟   間充當內存", "顯存", "緩存"], correct: 1 },
             { category: "Windows", question: "NTFS和FAT32的主要區別是?", options: ["速度", "NTFS支持更大文件", "FAT32更新", "沒區別"], correct: 1 },
-            { category: "Windows", question: "Windows Update的重要性在於?", options: ["佔用空間", "修復安全漏洞和提升穩定性", "減慢速度", "刪除文件"], correct: 1 },
+            { category: "Windows", question: "Windows Update的重   性在於?", options: ["佔用空間", "修復安全漏洞和提升穩定性", "減慢速度", "刪除文件"], correct: 1 },
             { category: "Windows", question: "Hyper-V是什麼?", options: ["遊戲模式", "虛擬化技術", "瀏覽器", "防毒軟件"], correct: 1 },
             { category: "Windows", question: "DirectX主要用於?", options: ["文檔處理", "遊戲和多媒體", "網絡連接", "系統備份"], correct: 1 },
             { category: "Windows", question: "Windows Defender是什麼?", options: ["文件管理器", "內建防毒軟件", "瀏覽器", "播放器"], correct: 1 }
@@ -5700,7 +6538,7 @@
         const aiQuestions = [
             { question: "以下哪個是深度學習的框架？", options: ["TensorFlow", "MySQL", "Apache", "WordPress"], correct: 0 },
             { question: "GPT代表什麼？", options: ["General Processing Tool", "Generative Pre-trained Transformer", "Graphics Processing Technology", "Global Processing Task"], correct: 1 },
-            { question: "以下哪個不是機器學習的類型？", options: ["監督式學習", "非監督式學習", "強化學習", "隨機式學習"], correct: 3 },
+            { question: "以下哪個不是機器學習的   型？", options: ["監督式學習", "非監督式學習", "強化學習", "隨機式學習"], correct: 3 },
             { question: "神經網絡中的「神經元」是什麼？", options: ["生物細胞", "計算單元", "硬件設備", "程式語言"], correct: 1 },
             { question: "以下哪個公司開發   ChatGPT？", options: ["Google", "Microsoft", "OpenAI", "Meta"], correct: 2 },
             { question: "CNN通常用於處理什麼類型的數據？", options: ["文本", "圖像", "音頻", "視頻"], correct: 1 },
@@ -5732,7 +6570,7 @@
             { question: "什麼是過擬合(Overfitting)？   單解釋", correctText: "模型過度適應訓練數據", type: "text" }
         ];
 
-        // 新增：電腦配置軟件硬件題庫（供 computer-config 類別使用）
+        // 新增：電腦配置軟件硬件題庫（供 computer-config 類別使用   
         const computerConfigQuestions = [
             { question: "BIOS 的全稱是什麼？", options: ["Basic Input Output System", "Binary Input Output System", "Basic Integrated OS", "Boot Interface System"], correct: 0 },
             { question: "進入 BIOS/UEFI 常見的按鍵是哪一個？", options: ["F2 或 Delete", "Ctrl+C", "Alt+F4", "F11"], correct: 0 },
@@ -5781,7 +6619,7 @@
         const businessMarketingQuestionsExtra = [
             { question: "什麼是 A/B 測試在市場行銷中的主要用途？", options: ["比較兩種方案以找出較佳表現", "計算利潤", "編寫財務報表", "分析供應鏈"], correct: 0 },
             { question: "CRM 系統最主要的功能是什麼？", options: ["管理客戶   係與互動歷史", "處理薪資", "管理庫存", "設計產品包裝"], correct: 0 },
-            { question: "品牌定位 (brand positioning) 的核心在於？", options: ["為目標客群   立獨特且可辨識的價值主張", "減少廣告預算", "裁減員工", "優化供應鏈"], correct: 0 },
+            { question: "品牌定位 (brand positioning) 的核心在於？", options: ["為目標客群   立獨特且可辨   的價值主張", "減少廣告預算", "裁減員工", "優化供應鏈"], correct: 0 },
             { question: "在投資組合管理中，分散投資的主要目的是什麼？", options: ["降低單一資產帶來的風險", "獲得高頻交易利潤", "進行稅務避險", "保證收益"], correct: 0 },
             { question: "FinTech 常見的應用包括下列哪一項？", options: ["數位支付、P2P 借貸、智能投顧", "紙本帳單寄送", "傳統櫃檯匯款唯一", "實體券商專屬服務"], correct: 0 },
             { question: "KPI 在市場專案中代表什麼？", options: ["關鍵績效指標 (Key Performance Indicator)", "關鍵價格指標", "顧客服務時間", "庫存量"], correct: 0 },
@@ -5805,7 +6643,7 @@
             { question: "香港音樂產業中，製作人與公司標準合約通常關注什麼？", options: ["錄音、發行、版權與收益分配條款", "演出衣著顏色", "專輯封面的材質", "海報印刷大小"], correct: 0 }
         ];
 
-        // 手機題庫額外擴充（mobileQuestionsExtra）：覆蓋第1~20關需求範圍
+        // 手   題庫額外擴充（mobileQuestionsExtra）：覆蓋第1~20關需求範圍
         const mobileQuestionsExtra = [
             // 第一至十關：列出規格猜型號 / 列出型號猜規格 / 猜處理器晶片品牌 / 作業系統版本 / 相機像素技術
             { question: "若手機標示主鏡頭為 48MP，這常代表哪種鏡頭技術？", options: ["高像素主感光元件", "光學縮放為 10x", "僅超廣角", "不支援夜景模式"], correct: 0 },
@@ -5938,7 +6776,7 @@
             { question: "在影像後製中，什麼是色鍵(Chroma Key)通常用來去掉哪種顏色   景？", options: ["黑色", "白色", "綠色或藍色", "紅色"], correct: 2 },
             { question: "VR/AR內容開發常用於哪種場景？", options: ["沉浸式培訓與互動體驗", "文本編輯", "資料庫備份", "靜態網頁"], correct: 0 },
             { question: "常見的無損音訊格式？", options: ["MP3", "AAC", "WAV/FLAC", "OGG"], correct: 2 },
-            { question: "直播時為了降低回音與雜音，常用哪項設備或處理？", options: ["使用心型指向性麥   風並在軟體中使用噪音門和降噪處理", "關閉麥克風增益", "提高輸出音量", "使用內建麥克風"], correct: 0 },
+            { question: "直播時為了降低回音與雜音，常用哪項設備或處理？", options: ["使用心型指向性麥   風並在軟體中使用噪音門和降噪處理", "關閉麥克風增益", "提高輸出音量", "使   內建麥克風"], correct: 0 },
             { question: "在音訊後製中，為了讓語音更清晰，常見的處理順序是？", options: ["EQ -> Compressor -> De-esser -> Limiter", "Limiter -> De-esser -> EQ -> Compressor", "隨機處理", "只用Reverb"], correct: 0 }
         ];
 
@@ -6297,7 +7135,7 @@
             { question: "在山上如何增加手機信號？", options: ["埋在地下", "移到較高、開闊位置", "關機", "放水裡"], correct: 1 },
             { question: "除了999，還可以使用什麼求救方法？", options: ["等待", "哨子、鏡子反光、SOS信號", "大叫", "不理會"], correct: 1 },
             { question: "「一人有事，全隊停止」的原則是指？", options: ["不用理會", "團隊成員互相照應", "繼續前進", "各走各路"], correct: 1 },
-            { question: "使用手機求救時應該提供什麼資訊？", options: ["只說   命", "位置、人數、情況及聯絡方法", "隨便說", "不用說"], correct: 1 },
+            { question: "使用手機求救時應該提供什麼資訊？", options: ["只說   命", "位置、人   、情況及聯絡方法", "隨便說", "不用說"], correct: 1 },
             { question: "什麼是GPS定位？", options: ["遊戲", "通過衛星確定位置的技術", "音樂播放", "拍照功能"], correct: 1 },
             { question: "在香港，郊野公園求救柱的作用是？", options: ["裝飾", "標示位置方便報告位置", "坐下休息", "掛衣服"], correct: 1 },
             { question: "如果團隊中有人需要救援，其他人應該怎麼做？", options: ["全部離開", "留下照顧者，其他人求救   等待", "繼續玩樂", "不理會"], correct: 1 },
@@ -6355,7 +7193,7 @@
             { question: "日本共有幾個都道府縣？", options: ["43個", "45個", "47個", "50個"], correct: 2 },
             { question: "「瀨戶內海」位於日本哪幾個島之間？", options: ["本州與北海道", "本州與四國", "四國與九州", "九州與沖繩"], correct: 1 },
 
-            // 日本美食
+            // 日本美   
             { question: "「壽司」中的「握壽司」日文叫什麼？", options: ["巻き寿司", "握り寿司", "押し寿司", "ちらし寿司"], correct: 1 },
             { question: "日本三大和牛不包括以下哪一個？", options: ["神戶牛", "松阪牛", "近江牛", "宮崎牛"], correct: 3 },
             { question: "「拉麵」的發源地據說是日本哪個城市？", options: ["東京", "札幌", "福岡", "橫濱"], correct: 3 },
@@ -6418,7 +7256,7 @@
             { question: "大雄長大後本來會跟誰結婚？", options: ["靜香", "胖妹（技子）", "小玉", "美美"], correct: 1 },
             { question: "多啦A夢為什麼身體是藍色的？", options: ["本來就是", "被老鼠咬掉耳朵後哭成藍色", "塗了藍色油漆", "生病變色"], correct: 1 },
             { question: "大雄最常在哪裡睡午覺？", options: ["床上", "課室", "公園", "走廊"], correct: 1 },
-            { question: "胖虎開演唱會時，大家通常怎麼反應？", options: ["很開心", "想逃走", "鼓掌", "跟著唱"], correct: 1 },
+            { question: "胖虎開演唱會時，大家通常怎麼反應   ", options: ["很開心", "想逃走", "鼓掌", "跟著唱"], correct: 1 },
 
             // 經典場景
             { question: "多啦A夢的道具通常從哪裡拿出來？", options: ["百寶袋（四次元口袋）", "背包", "抽屜", "帽子"], correct: 0 },
@@ -6447,7 +7285,7 @@
 
             // 劇情時間排序（電影事件順序、道具時間線、角色成長歷程）
             { category: "時間線", question: "以下哪一項通常最先出現在劇情時間線中？", options: ["大雄遇到多啦A夢", "大雄成家立室", "大雄成為科學家", "多啦A夢回到未來"], correct: 0 },
-            { category: "電影版", question: "哪一部電影描述多啦A夢與大雄一起去月球冒險？", options: ["大雄的月球探險記", "大雄的太空漂流記", "大雄與海底奇兵", "大雄的恐龍"], correct: 0 },
+            { category: "電影版", question: "哪一部電影描述多啦A夢與大雄一起去月球冒險？", options: ["大雄的月球探險記", "大雄的太空漂流記", "大雄與海底奇兵", "大雄   恐龍"], correct: 0 },
 
             // 道具分類整理：按功能、危險度、使用頻率
             { category: "道具分類", question: "下列哪類道具最常用於日常生活小幫助？", options: ["生活便利型（如任意門、記憶麵包）", "武器型", "醫療急救型", "裝飾型"], correct: 0 },
@@ -6512,7 +7350,7 @@
             { question: "三角形路牌通常代表什麼？", options: ["禁止", "警告", "指示", "指路"], correct: 1 },
             { question: "藍色圓形路牌通常代表什麼？", options: ["禁止", "警告", "必須遵守的指示", "指路"], correct: 2 },
             { question: "「停」(STOP) 標誌是什麼形狀？", options: ["圓形", "三角形", "八角形", "方形"], correct: 2 },
-            { question: "見到「讓路」標誌應該怎樣做？", options: ["加速通過", "減速並讓其他車輛先行", "停車等待", "響號"], correct: 1 },
+            { question: "見到「讓路」標誌應該怎樣做？", options: ["加   通過", "減速並讓其他車輛先行", "停車等待", "響號"], correct: 1 },
             { question: "黃色之字形線代表什麼？", options: ["可以停車", "不准停車上落客貨", "巴士站", "的   站"], correct: 1 },
             { question: "紅色單   線路邊代表什麼？", options: ["可以停車", "不准停車", "可以短暫停車", "巴士專線"], correct: 1 },
             { question: "黃色單實線路邊代表什麼？", options: ["可以隨意停車", "不准停車，但可上落     貨（有時間限制）", "巴士站", "的士站"], correct: 1 },
@@ -6597,7 +7435,7 @@
             { question: "購買二手車時應該檢查什麼？", options: ["只看外觀", "車輛狀況、車輛歷史記錄、文件齊全性", "只看價錢", "不用檢查"], correct: 1 },
             { question: "二手車過戶需要什麼？", options: ["口頭協議", "買賣雙方到運輸署辦理過戶", "只需簽字", "不用手續"], correct: 1 },
             { question: "牌費（車輛牌照費）需要每年繳交嗎？", options: ["不需要", "需要，續牌時繳交", "十年一次", "五年一次"], correct: 1 },
-            { question: "購買車輛保險時需要提供什麼資料？", options: ["只需姓名", "車輛資料、駕駛者資料、用途等", "只需車牌", "不用資料"], correct: 1 },
+            { question: "購買車輛保   時需要提供什麼資料？", options: ["只需姓名", "車輛資料、駕駛者資料、用途等", "只需車牌", "不用資料"], correct: 1 },
             { question: "新車的首次登記稅（首期稅）是什麼？", options: ["每月繳交", "購買新車時一次性繳交的稅項", "不用繳稅", "每年繳交"], correct: 1 },
             { question: "車輛登記號碼（車牌）可以自選嗎？", options: ["不可以", "可以，但需要付費競投", "隨機分配", "先   先得"], correct: 1 },
             { question: "私人協議購買二手車時，建議先做什麼？", options: ["直接付款", "驗車和查詢車輛歷史", "立即過戶", "不用檢查"], correct: 1 },
@@ -6627,7 +7465,7 @@
 
         // 備用 AI 題   
         const aiQuestionsExtra = [
-            { question: "哪種學習方式通   不需要人工標註標籤？", options: ["監督學習", "非監督學習", "半監督學習", "強化學習"], correct: 1 },
+            { question: "哪種學習方式通   不需   人工標註標籤？", options: ["監督學習", "非監督學習", "半監督學習", "強化學習"], correct: 1 },
             { question: "哪家公司開發了語言模型BERT? ", options: ["OpenAI", "Google", "Facebook", "Microsoft"], correct: 1 },
             { question: "在圖像生成中，哪個技術常用於提高圖像質量   細節控制？", options: ["Diffusion模型", "決策樹", "支持向量機", "KMeans 分群"], correct: 0 },
             { question: "AI倫理討論中   哪一項是常見關切?", options: ["能源消耗", "模型尺寸", "訓練速度", "色彩空間"], correct: 0 }
@@ -7557,7 +8395,7 @@
 
             updateScore();
 
-            // 顯示關卡完成模態框
+            // 顯示   卡完成模態框
             let resultDetails = '<div style="text-align: left; margin-top: 20px; max-height: 300px; overflow-y: auto;">';
 
             currentQuestions.forEach((question, index) => {
@@ -7681,7 +8519,7 @@
                             const sanitize = (s) => {
                                 if (typeof s !== 'string') return s;
                                 // 移除 U+FFFD ( ) 以及控制字符（除了常用的中文與英文與標點）
-                                return s.replace(/\uFFFD/g, '').replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').replace(/   /g, '');
+                                return s.replace(/\uFFFD/g, '').replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').replace(/ {3}/g, '');
                             };
                             // 處理 question 和 options 中的亂碼
                             clone.question = sanitize(clone.question);
@@ -8239,7 +9077,7 @@
             { category: "港鐵九巴整合", question: "西鐵線經過的主要新界站點包括?", options: ["美孚、葵芳", "美孚、葵芳、荃灣西、屯門", "只有屯門", "只有美孚"], correct: 1 },
             { category: "港鐵九巴整合", question: "新界西北最大的轉乘樞紐是?", options: ["屯門站", "元朗站", "天水圍站", "朗屏站"], correct: 0 },
             { category: "港鐵九巴整合", question: "現時香港有幾條跨境巴士站點?", options: ["1個", "3個", "5個以上", "沒有直接巴士"], correct: 2 },
-            { category: "港鐵   巴整合", question: "前往新界大嶼山的最主要路線是?", options: ["巴士", "渡輪", "港鐵東涌線", "以上皆可"], correct: 2 }
+            { category: "港鐵   巴整合", question: "前往新界大嶼山的最   要路線是?", options: ["巴士", "渡輪", "港鐵東涌線", "以上皆可"], correct: 2 }
         ];
 
         const hkTransportFutureQuestions = [
@@ -8363,6 +9201,74 @@
     </script>
 
 <!-- Custom Alert Dialog -->
+    </div>
+    
+
+    <!-- ========== LOGIN SCRIPT ========== -->
+    <script>
+        // Password toggle
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', () => {
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+                togglePassword.className = type === 'password'
+                    ? 'ri-eye-off-fill input-icon'
+                    : 'ri-eye-fill input-icon';
+            });
+        }
+        
+        // Login form
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const usernameInput = document.getElementById('username');
+        
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                if (errorMessage) errorMessage.classList.remove('show');
+                
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value;
+                
+                loginBtn.classList.add('loading');
+                loginBtn.textContent = '';
+                
+                setTimeout(() => {
+                    if (username === 'admin2025' && password === 'admin2025') {
+                        // SUCCESS
+                        console.log('Login successful, switching to game mode');
+                        document.body.classList.add('game-mode');
+                        window.scrollTo(0, 0);
+                    } else {
+                        // FAILED
+                        console.log('Login failed');
+                        loginBtn.classList.remove('loading');
+                        loginBtn.textContent = '登入 LOGIN';
+                        if (errorMessage) errorMessage.classList.add('show');
+                        
+                        usernameInput.style.animation = 'shake 0.3s ease';
+                        passwordInput.style.animation = 'shake 0.3s ease';
+                        setTimeout(() => {
+                            usernameInput.style.animation = '';
+                            passwordInput.style.animation = '';
+                        }, 300);
+                    }
+                }, 800);
+            });
+        }
+        
+        // Prevent social links
+        document.querySelectorAll('.social-btn, .forgot-link').forEach(link => {
+            link.addEventListener('click', (e) => e.preventDefault());
+        });
+    </script>
+
+    <!-- ========== GAME SCRIPTS ========== -->
 <script>
 // Custom alert function to replace browser alert()
 function showAlertDialog(message) {
@@ -8630,7 +9536,7 @@ function showAlertDialog(message) {
         { question: "【長安邨（青衣）】的主要行政區是哪一個？", options: ["葵青區","荃灣區","油尖旺","元朗區"], correct: 0, source: "https://zh.wikipedia.org/wiki/香港公共屋邨列表" },
         { question: "【青衣邨】位於哪一個香港行政區？", options: ["葵青區","荃灣區","屯門區","元朗區"], correct: 0, source: "https://zh.wikipedia.org/wiki/香港公共屋邨列表" },
         { question: "【荔景邨】位於哪一個香港行政麼？", options: ["葵青區","荃灣區","屯門區","元朗區"], correct: 0, source: "https://zh.wikipedia.org/wiki/香港公共屋邨列表" },
-        { question: "【屯門 良景邨】在下面選項中是哪一個？", options: ["良景邨","耀東邨","翠灣邨","富蝶邨"], correct: 0, source: "https://zh.wikipedia.org/wiki/香港公共屋邨列表" },
+        { question: "【屯門 良景邨】在下面選項中是哪   個？", options: ["良景邨","耀東邨","翠灣邨","富蝶邨"], correct: 0, source: "https://zh.wikipedia.org/wiki/香港公共屋邨列表" },
 
         { question: "【沙田區】的以下哪個屋邨是在馬鞍山？", options: ["欣安邨","長康邨","雅寧苑","迎東邨"], correct: 0, source: "https://zh.wikipedia.org/wiki/香港公共屋邨列表" },
         { question: "【深水埗區】著名屋邨包含以下哪一個？", options: ["李鄭屋邨","迎東邨","龍逸邨","長康邨"], correct: 0, source: "https://zh.wikipedia.org/wiki/香港公共屋邨列表" },
@@ -8653,7 +9559,7 @@ function showAlertDialog(message) {
         { question: "X 光檢查最適合初步評估哪一種情況？", options: ["骨折或胸腔感染(肺炎)","微小腦梗塞診斷","代謝性疾病檢測","細胞層面的癌症分類"], correct: 0 },
         { question: "關於血常規 (CBC) 中的 '白血球 (WBC)' 上升通常表示：", options: ["感染或發炎反應","貧血","血小板下降","電解質不平衡"], correct: 0 },
         { question: "CT 與 MRI 的主要差別為何？", options: ["CT 以 X 光為基礎，對骨骼與出血敏感；MRI 對軟組織顯像更佳","CT 比 MRI 更能顯示軟組織細節","MRI 使用輻射，CT 不使用","兩者完全相同"], correct: 0 },
-        { question: "香港醫管局 (HA) 的主要職責為何？", options: ["提供公營醫院及相關服務的醫療服務管理與運作","制定全國藥品註冊政策","經營私人醫療保險","管理跨境醫療旅遊"], correct: 0 },
+        { question: "香港醫管局 (HA) 的主要職責為何？", options: ["提供公營醫院及相關服務的醫療服務管理與運作","制定全國藥品註冊政策","經   私人醫療保險","管理跨境醫療旅遊"], correct: 0 },
         { question: "關於香港自願醫保計劃 (VHIS)，下列敘述何者正確？", options: ["是一套提升私人醫療保險保障的自願計劃，通過標準化保障鼓勵市民投保","由醫管局直接提供給病人的現金   助","強制所有市民參加","僅針對跨境醫療"], correct: 0 },
         { question: "在內地職工醫保與城鄉居民醫保的主要差異中，下列哪一項屬實？", options: ["職工醫保通常有更高的保障範圍和報銷比例，且由雇主/職工共同繳費","城鄉居民醫保是雇主專屬的額外險種","職工醫保只覆蓋門診","兩者沒有差別"], correct: 0 },
         { question: "下列哪個標誌最有可能出現在成藥 (OTC) 包裝上？", options: ["可在藥房/店舖直接購買且標示適應症與用法","僅限醫師處方使用","標示『處方藥』字樣","只能在醫院藥局取得"], correct: 0 },
@@ -8733,7 +9639,7 @@ function showAlertDialog(message) {
             'math-king': (typeof mathKingQuestions !== 'undefined' ? mathKingQuestions : (typeof window.mathKingQuestions !== 'undefined' ? window.mathKingQuestions : []))
         };
 
-        // 香港樂壇題庫（starter set，覆蓋經典至2025新星）
+        // 香港樂壇題庫（starter set，   蓋經典至2025新星）
         const hkMusicQuestions = [
             { question: "哪一位被廣泛認為是香港流行音樂黃金時期(80s-90s)的重要歌手？", options: ["張國榮", "周杰倫", "Beyonce", "Adele"], correct: 0 },
             { question: "『作曲/填詞/監製』中，哪個角色主要負責歌曲的旋律創作？", options: ["作曲", "填詞", "監製", "宣傳"], correct: 0 },
@@ -8766,7 +9672,7 @@ function showAlertDialog(message) {
 
         // 新增 倉頡題庫 (cangjieQuestions)
         const cangjieQuestions = [
-            { question: "倉頡輸入法最基本的概念是什麼？", options: ["以字形拆分部首並對應碼表", "以讀音對應字母", "以筆劃數輸入", "以語義索引輸入"], correct: 0 },
+            { question: "倉頡輸入法最基本的概念是什麼？", options: ["以字形拆分部首並對應碼表", "以讀音對應字母", "以筆劃數輸入", "以語義索引輸   "], correct: 0 },
             { question: "部首碼 '月' 在倉頡中通常代   哪類形狀？", options: ["與肉月有關的字形", "水相關", "植物相關", "位置相關"], correct: 0 },
             { question: "以下哪一項屬於倉頡速成入門練習？", options: ["認識基本部首與對應鍵位", "學習 Python 基礎", "記憶所有英文字母", "學習網頁設計"], correct: 0 },
             { question: "倉頡輸入中，常見錯字雷區往往來自於？", options: ["部首判斷錯誤或拆字順序不正確", "鍵盤   位被誤放", "顯示器色彩問題", "網絡延遲"], correct: 0 },
@@ -8823,7 +9729,7 @@ function showAlertDialog(message) {
 
         // 英語進修題庫（intermediate/advanced）
         const englishLearningQuestions = [
-            // 詞彙與片語 (intermediate -> advanced)
+            // 詞彙   片語 (intermediate -> advanced)
             { question: "Choose the correct word: The project was delayed due to unforeseen __________.", options: ["circumstances", "circuses", "circuitry", "circulation"], correct: 0 },
             { question: "Which phrasal verb means 'to postpone'?", options: ["call off", "call on", "call up", "call in"], correct: 0 },
             { question: "Translate to English: '價格' (商業用語)", options: ["price", "cost", "value", "fare"], correct: 1 },
@@ -9940,7 +10846,7 @@ const englishS4Questions = [
     { question_zh: "(Degree modifiers) 'very' 在句中用來修飾什麼？", question_en: "(Degree modifiers) What does 'very' modify in a sentence?", options: [
         { zh: "形容詞或副詞以加強程度", en: "An adjective or adverb to intensify degree" },
         { zh: "名詞", en: "A noun" },
-        { zh: "動詞原形", en: "A verb base form" },
+        { zh: "   詞原形", en: "A verb base form" },
         { zh: "連詞", en: "A conjunction" }
     ], correctIndex: 0 }
 ];
@@ -9974,7 +10880,7 @@ if (typeof window.sanitizeAndDedupeBanks === 'function') {
         { category: '宋元', question: '宋朝相對於唐朝的政治走向是？', options: ['重文輕武、中央財政與文官體系強化', '強化軍事擴張', '走向世襲分封', '完全採行土地公有制'], correct: 0 },
         { category: '明清', question: '明清時期君主集權的主要手段包含哪一項？', options: ['設置錦衣衛/東廠等監控機構', '推行分封制', '全面實行地方自治', '廢除皇帝'], correct: 0 },
         { category: '清初', question: '清初的民族政策一般以何種方式處理漢滿關係？', options: ['採取滿族貴族控制核心軍政，並保留部分漢人官員','全面驅逐漢人','強制同化外國人','實行民主選舉'], correct: 0 },
-        { category: '近現代', question: '文化大革命主要是哪一種性質的運動？', options: ['政治運動與大規模社會動員', '經濟改革政策', '文化休閒活動', '科技交流計劃'], correct: 0 },
+        { category: '近現代', question: '文化大革命主要是哪一種性質的運動？', options: ['政治運動與大規模   會動員', '經濟改革政策', '文化休閒活動', '科技交流計劃'], correct: 0 },
         { category: '改革開放', question: '1978 年之後「改革開放」的主要內容之一是？', options: ['推動經濟市場化與對外開放', '恢復分封制', '停止對外貿易', '取消所有私有財產'], correct: 0 },
         { category: '對外關係', question: '20世紀末以來中國在國際舞台上的一項重要策略是？', options: ['參與全球化與吸引外資', '封閉國門', '完全停止和外國交流', '放棄外交關係'], correct: 0 }
     ];
@@ -10092,7 +10998,7 @@ if (typeof window.sanitizeAndDedupeBanks === 'function') {
         { question: "哪個 CSS 屬性用來設定彈性容器子項的排列方向？", options: ["flex-direction", "justify-content", "align-items", "display"], correct: 0 },
         { question: "在前端中，哪個事件會在 DOM 完全載入但資源（圖片等）可能尚未載入時觸   ？", options: ["DOMContentLoaded", "load", "click", "readystatechange"], correct: 0 },
         { question: "為提高可存取性，圖片標籤應該包含哪個屬性？", options: ["alt", "title", "srcset", "data-src"], correct: 0 },
-        { question: "在 HTTP 中，哪個狀態碼代表資源不存在？", options: ["404", "200", "500", "301"], correct: 0 }
+        { question: "在 HTTP 中，哪個狀態碼   表資源不存在？", options: ["404", "200", "500", "301"], correct: 0 }
     ];
 
     additions.programmingQuestions = [
@@ -10556,7 +11462,7 @@ if (typeof window.sanitizeAndDedupeBanks === 'function') {
 
     // 5) Expand mathKingQuestions (append non-destructively)
     const extraMath = [
-        // 有向數
+        // 有向   
         { category: '中一', question: '有向數   -7 + 4 = ?', options: ['-3','3','11','-11'], correct: 0 },
         { category: '中一', question: '有向數：5 - (-2) = ?', options: ['7','3','-7','-3'], correct: 0 },
         // 代數式和方程式
@@ -10737,3 +11643,4 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
