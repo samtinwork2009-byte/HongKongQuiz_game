@@ -180,6 +180,17 @@
             50% { background-position: 100% 50%; }
         }
 
+        @keyframes pulse-glow {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 20px 10px rgba(255, 193, 7, 0.1);
+                transform: scale(1.02);
+            }
+        }
+
         .logo-area p {
             color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
@@ -530,12 +541,85 @@
 
         /* 基本 category-card 公用樣式（將大量 inline 重複屬性提取出來） */
         .category-card {
+            background: linear-gradient(135deg, rgba(0, 168, 255, 0.15), rgba(76, 208, 255, 0.1));
+            border: 2px solid rgba(0, 168, 255, 0.3);
             border-radius: 16px;
-            padding: 25px;
+            padding: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 168, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-card:hover > div:first-child {
+            opacity: 1 !important;
+        }
+
+        .category-card.selected {
+            border-width: 3px;
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.5);
+        }
+
+        .category-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            animation: checkmark 0.3s ease;
+        }
+
+        .category-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: var(--accent-light);
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-card p {
+            color: rgba(224, 224, 224, 0.8);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
         }
         
         body::before {
@@ -1619,51 +1703,6 @@
             }
         }
 
-        /* 類別卡片樣式 */
-        .category-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .category-card:hover > div:first-child {
-            opacity: 1 !important;
-        }
-
-        .category-card.selected {
-            border-width: 3px;
-            box-shadow: 0 0 30px rgba(0, 168, 255, 0.5);
-        }
-
-        .category-card.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            animation: checkmark 0.3s ease;
-        }
-
-        @keyframes checkmark {
-            0% {
-                transform: scale(0) rotate(-45deg);
-            }
-            50% {
-                transform: scale(1.2) rotate(5deg);
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-            }
-        }
-
         .start-game-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 35px rgba(0, 168, 255, 0.6);
@@ -1720,57 +1759,8 @@
             margin-bottom: 40px;
         }
 
-        .category-card {
-            background: linear-gradient(135deg, rgba(0, 168, 255, 0.15), rgba(76, 208, 255, 0.1));
-            border: 2px solid rgba(0, 168, 255, 0.3);
-            border-radius: 16px;
-            padding: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 168, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .category-card:hover::before {
-            opacity: 1;
-        }
-
-        .category-icon {
-            font-size: 50px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .category-card h3 {
-            font-size: 24px;
-            margin-bottom: 12px;
-            color: var(--accent-light);
-            position: relative;
-            z-index: 1;
-        }
-
-        .category-card p {
-            color: rgba(224, 224, 224, 0.8);
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-
-        .back-to-intro-btn {
+        .back-to-intro-btn,
+        #backToHomeBtn {
             background: var(--card-bg);
             border: 1px solid rgba(0, 168, 255, 0.3);
             color: var(--accent-light);
@@ -1779,20 +1769,15 @@
             cursor: pointer;
             font-size: 16px;
             transition: all 0.3s ease;
-            display: block;
-            margin: 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .back-to-intro-btn:hover {
+        .back-to-intro-btn:hover,
+        #backToHomeBtn:hover {
             background: rgba(0, 168, 255, 0.2);
             box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
-        }
-
-        @media (max-width : 1879px ){
-            .level {
-                flex: 1 1 calc(25% - 10px);
-                min-width: 70px;
-            }
         }
 
         @media (max-width: 1024px) {
@@ -2052,16 +2037,14 @@
         #backToHomeBtn,
         .math-back-btn,
         .back-to-intro-btn.math-back-btn {
-            display: inline-flex !important;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 22px !important;
-            border-radius: 10px !important;
-            width: auto !important;
-            min-width: 140px !important;
-            max-width: 420px !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
+            padding: 10px 22px;
+            border-radius: 10px;
+            width: auto;
+            min-width: 140px;
+            max-width: 420px;
             box-sizing: border-box;
         }
 
@@ -2080,8 +2063,8 @@
             .back-to-intro-btn,
             #backToHomeBtn,
             .math-back-btn {
-                width: 100% !important;
-                padding: 12px 16px !important;
+                width: 100%;
+                padding: 12px 16px;
                 min-width: 0 !important;
             }
         }
@@ -2113,6 +2096,407 @@
             justify-content: initial !important;
             padding: 20px !important;
             overflow-x: hidden !important;
+        }
+
+        /* ========== HINT SYSTEM CSS ========== */
+        .hint-toolbar {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(0, 168, 255, 0.15), rgba(76, 208, 255, 0.1));
+            border: 2px solid rgba(0, 168, 255, 0.3);
+            border-radius: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hint-tool {
+            flex: 1 1 calc(33.333% - 15px);
+            min-width: 140px;
+            background: var(--card-bg);
+            border: 2px solid rgba(0, 168, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .hint-tool:hover:not(.disabled) {
+            background: rgba(0, 168, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .hint-tool.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .hint-icon {
+            font-size: 28px;
+        }
+
+        .hint-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--accent-light);
+        }
+
+        .hint-cost {
+            font-size: 12px;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .hint-btn {
+            background: linear-gradient(135deg, #4cd0ff, #00a8ff);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            width: 100%;
+        }
+
+        .hint-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.4);
+        }
+
+        .hint-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ========== ANALYTICS PANEL CSS ========== */
+        .analytics-panel {
+            background: linear-gradient(135deg, var(--secondary), rgba(19, 26, 45, 0.6));
+            border: 2px solid rgba(0, 168, 255, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .analytics-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid rgba(0, 168, 255, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            padding: 10px 18px;
+            background: transparent;
+            border: 2px solid rgba(0, 168, 255, 0.3);
+            color: var(--accent-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-color: var(--accent);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4);
+        }
+
+        .tab-btn:hover {
+            background: rgba(0, 168, 255, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0, 168, 255, 0.15), rgba(76, 208, 255, 0.1));
+            border: 2px solid rgba(0, 168, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 168, 255, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--accent-light);
+            margin-bottom: 8px;
+        }
+
+        .stat-subtitle {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 168, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .analysis-header {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 168, 255, 0.3);
+        }
+
+        .category-list,
+        .mistakes-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .category-analysis-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 168, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .category-analysis-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .category-name {
+            font-weight: bold;
+            color: var(--accent-light);
+        }
+
+        .category-icon {
+            font-size: 20px;
+        }
+
+        .card-stats {
+            font-size: 13px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+
+        .label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .value {
+            font-weight: bold;
+            color: var(--accent-light);
+        }
+
+        .mistake-card {
+            background: linear-gradient(135deg, rgba(255, 55, 80, 0.1), rgba(255, 23, 68, 0.05));
+            border: 1px solid rgba(255, 55, 80, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .mistake-question {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(0, 168, 255, 0.05);
+            border-left: 3px solid var(--accent);
+            border-radius: 4px;
+        }
+
+        .mistake-stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+
+        .wrong-count {
+            color: #ff3750;
+        }
+
+        .correct-count {
+            color: #00d26a;
+        }
+
+        .accuracy {
+            color: #ffd700;
+        }
+
+        .your-answers {
+            margin-bottom: 10px;
+        }
+
+        .answer-item {
+            padding: 8px;
+            background: rgba(0, 168, 255, 0.05);
+            border-radius: 4px;
+            margin-bottom: 6px;
+            font-size: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .attempt {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: bold;
+        }
+
+        .answer-text {
+            flex: 1;
+        }
+
+        .review-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: #000;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .review-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4);
+        }
+
+        .analytics-btn {
+            background: linear-gradient(135deg, #4cd0ff, #00a8ff);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .analytics-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4);
+        }
+
+        /* Responsive for Hint and Analytics */
+        @media (max-width: 768px) {
+            .hint-tool {
+                flex: 1 1 calc(50% - 15px);
+                min-width: 120px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .analytics-tabs {
+                gap: 8px;
+            }
+
+            .tab-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hint-tool {
+                flex: 1 1 100%;
+            }
+
+            .analytics-panel {
+                padding: 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-tabs {
+                flex-direction: column;
+            }
+
+            .stat-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -2216,11 +2600,11 @@
             <div class="intro-header">
                 <div class="intro-logo">
                     <div class="intro-logo-icon">HK</div>
-                    <div class="intro-logo-text"><strong>2025真・香港人問答猜謎挑戰</strong></div>
+                    <div class="intro-logo-text"><strong>2026真・香港人問答猜謎挑戰 v2.0.0</strong></div>
                 </div>
-                <h1 class="intro-title"><strong style="color: #C1BCE3">真 • 香港人問答及猜謎遊戲</strong></h1>
+                <h1 class="intro-title"><strong style="color: #C1BCE3">真 • 香港人問答及猜謎遊戲 (2026 版本 2.0.0)</strong></h1>
               <p>&nbsp;</p>
-<p class="intro-subtitle"><strong style="color: #9D91A8; font-size: 24px;">專為真•香港人而設計的問答猜謎遊戲</strong></p>
+<p class="intro-subtitle"><strong style="color: #9D91A8; font-size: 24px;">專為真•香港人而設計的問答猜謎遊戲 - 全新升級版本</strong></p>
             </div>
 
             <div class="intro-description">
@@ -2657,6 +3041,14 @@
                         <p style="color: rgba(224, 224, 224, 0.8); line-height: 1.6; position: relative; z-index: 1;">測試你對多啦A夢角色、道具、故事情節及經典場景的深度認知</p>
                     </div>
 
+                    <!-- 隨機題庫挑戰 -->
+                    <div class="category-card" data-category="random" style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 235, 59, 0.1)); border: 2px solid rgba(255, 193, 7, 0.3); border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; animation: pulse-glow 2s infinite;">
+                        <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255, 193, 7, 0.1) 0%, transparent 70%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none;"></div>
+                        <div class="category-icon" style="font-size: 48px; margin-bottom: 15px; position: relative; z-index: 1;">🎲</div>
+                        <h3 style="font-size: 22px; margin-bottom: 10px; color: #ffc107; position: relative; z-index: 1;">隨機題庫挑戰</h3>
+                        <p style="color: rgba(224, 224, 224, 0.8); line-height: 1.6; position: relative; z-index: 1;">從全部題庫中隨機抽取題目，考驗你的全方位知識！</p>
+                    </div>
+
                 </div>
 
                 <div class="selected-category-info" style="background: var(--card-bg); border: 2px solid var(--accent); border-radius: 12px; padding: 20px; margin-bottom: 20px; display: none; animation: slideIn 0.3s ease;">
@@ -2955,9 +3347,34 @@
                 <!-- 選項將由JavaScript動態生成 -->
             </div>
         </div>
+
+        <!-- 提示系統工具欄 -->
+        <div class="hint-toolbar" id="hintToolbar">
+            <div class="hint-tool" data-hint="remove">
+                <div class="hint-icon">❌</div>
+                <div class="hint-name">消除選項</div>
+                <div class="hint-cost">💰100</div>
+                <button class="hint-btn" data-hint="remove">使用</button>
+            </div>
+            
+            <div class="hint-tool" data-hint="smart">
+                <div class="hint-icon">💬</div>
+                <div class="hint-name">題目提示</div>
+                <div class="hint-cost">💰150</div>
+                <button class="hint-btn" data-hint="smart">使用</button>
+            </div>
+            
+            <div class="hint-tool" data-hint="time">
+                <div class="hint-icon">⏳</div>
+                <div class="hint-name">延長時間</div>
+                <div class="hint-cost">💰200</div>
+                <button class="hint-btn" data-hint="time">使用</button>
+            </div>
+        </div>
         
             <div class="controls">
                 <button id="backToHomeBtn">返回到主頁</button>
+                <button id="analyticsBtn" class="analytics-btn">📊 查看統計數據</button>
 
                 <!-- 遊戲平台工具包 -->
                 <div style="margin: 15px 0; padding: 15px; background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 130, 0.1)); border: 2px solid rgba(138, 43, 226, 0.5); border-radius: 12px;">
@@ -2996,274 +3413,76 @@
             </div>
         
 
-        <div class="result-modal" id="resultModal">
-            <div class="modal-content">
-                <div class="modal-title" id="modalTitle">關卡完成!</div>
-                <div class="modal-message" id="modalMessage">你成功完成了這個關卡!</div>
-                <div class="modal-score" id="modalScore">+50 分</div>
-                <div id="retryButtonContainer" style="display: none; margin-top: 15px;">
-                    <button id="retryLevelBtn" style="background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%); margin-bottom: 10px;">重做本關 (一次機會)</button>
-                </div>
-                <div style="display:flex; gap:10px; margin-top:12px; justify-content:center; flex-wrap:wrap;">
-                    <button id="shareScoreBtn" style="background: linear-gradient(135deg, #00a8ff 0%, #4cd0ff 100%); color: #fff; font-weight: bold; padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer;">📸 分享成績</button>
-                    <button id="nextLevelBtn" disabled="" style="background: linear-gradient(135deg, #28a745 0%, #3ad76b 100%); color: #fff; font-weight: bold; padding: 10px 18px; border: none; border-radius: 8px;">前往下一關</button>
-                    <button id="closeModalBtn">繼續</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 连击计数器 -->
-        <div class="combo-container" id="comboContainer">
-            <div class="combo-display">
-                <div class="combo-number" id="comboNumber">0</div>
-                <div class="combo-text">
-                    <span class="combo-fire">🔥</span>
-                    COMBO
-                    <span class="combo-fire">🔥</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
-
-    <!-- 遊戲主畫面 -->
-    <div class="game-screen" id="gameScreen" style="display: none;">
-        <div class="container">
-            <header>
-                <div class="logo">
-                    <div class="logo-icon">HK</div>
-                    <div class="logo-text">Hong Kong Quiz Game</div>
-                </div>
-                <div class="score-board">
-                    <div>分數: <span class="score" id="score">0</span></div>
-                    <div class="level-score">本關卡: <span id="levelScore">&nbsp;</span> 55分</div>
-                    <div style="color: #ffd700; font-weight: bold; margin-top: 5px;">金幣: $<span id="coinsDisplay">0</span>$</div>
-                </div>
-            </header>
-
-            <!-- 进度条 -->
-            <div class="progress-container">
-                <div class="progress-header">
-                    <div class="progress-title">
-                        <span>🎯</span>
-                        <span>遊戲進度</span>
-                    </div>
-                    <div class="progress-stats">
-                        已完成 <span id="answeredCount">0</span> / <span id="totalCount">5</span> 題
-                    </div>
-                </div>
-                <div class="progress-bar-wrapper">
-                    <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
-                    <div class="progress-percentage" id="progressPercentage">0%</div>
-                </div>
-            </div>
-
-            <!-- 倒计时器 -->
-            <div class="timer-container" id="timerContainer">
-                <div class="timer-icon">⏱️</div>
-                <div class="timer-display">
-                    <div class="timer-label">剩餘時間</div>
-                    <div class="timer-value" id="timerValue">25</div>
-                    <div class="timer-unit">秒</div>
-                </div>
-                <div class="timer-progress-ring">
-                    <svg width="80" height="80">
-                        <circle cx="40" cy="40" r="36" class="timer-ring-bg"></circle>
-                        <circle cx="40" cy="40" r="36" class="timer-ring-fill" id="timerRingFill"></circle>
-                    </svg>
-                </div>
-            </div>
-
-        <div class="level-indicator">
-            <div class="level active" data-level="1">
-                <div class="level-number">關卡 1</div>
-                <div class="level-difficulty">新手級</div>
-            </div>
-            <div class="level" data-level="2">
-                <div class="level-number">關卡 2</div>
-                <div class="level-difficulty">入門級</div>
-            </div>
-            <div class="level" data-level="3">
-                <div class="level-number">關卡 3</div>
-                <div class="level-difficulty">學徒級</div>
-            </div>
-            <div class="level" data-level="4">
-                <div class="level-number">關卡 4</div>
-                <div class="level-difficulty">進階級</div>
-            </div>
-            <div class="level" data-level="5">
-                <div class="level-number">關卡 5</div>
-                <div class="level-difficulty">熟手級</div>
-            </div>
-            <div class="level" data-level="6">
-                <div class="level-number">關卡 6</div>
-                <div class="level-difficulty">專家級</div>
-            </div>
-            <div class="level" data-level="7">
-                <div class="level-number">關卡 7</div>
-                <div class="level-difficulty">精英級</div>
-            </div>
-            <div class="level" data-level="8">
-                <div class="level-number">關卡 8</div>
-                <div class="level-difficulty">大師級</div>
-            </div>
-            <div class="level" data-level="9">
-                <div class="level-number">關卡 9</div>
-                <div class="level-difficulty">高手級</div>
-            </div>
-            <div class="level" data-level="10">
-                <div class="level-number">關卡 10</div>
-                <div class="level-difficulty">達人級</div>
-            </div>
-            <div class="level" data-level="11">
-                <div class="level-number">關卡 11</div>
-                <div class="level-difficulty">資深級</div>
-            </div>
-            <div class="level" data-level="12">
-                <div class="level-number">關卡 12</div>
-                <div class="level-difficulty">專業級</div>
-            </div>
-            <div class="level" data-level="13">
-                <div class="level-number">關卡 13</div>
-                <div class="level-difficulty">傳奇級</div>
-            </div>
-            <div class="level" data-level="14">
-                <div class="level-number">關卡 14</div>
-                <div class="level-difficulty">超神級</div>
-            </div>
-            <div class="level" data-level="15">
-                <div class="level-number">關卡 15</div>
-                <div class="level-difficulty">專精級</div>
-            </div>
-            <div class="level" data-level="16">
-                <div class="level-number">關卡 16</div>
-                <div class="level-difficulty">頂尖級</div>
-            </div>
-            <div class="level" data-level="17">
-                <div class="level-number">關卡 17</div>
-                <div class="level-difficulty">無敵級</div>
-            </div>
-            <div class="level" data-level="18">
-                <div class="level-number">關卡 18</div>
-                <div class="level-difficulty">傳說級</div>
-            </div>
-            <div class="level" data-level="19">
-                <div class="level-number">關卡 19</div>
-                <div class="level-difficulty">巔峰級</div>
-            </div>
-            <div class="level" data-level="20">
-                <div class="level-number">關卡 20</div>
-                <div class="level-difficulty">終極大師</div>
-            </div>
-        </div>
-        
-        <div class="game-area">
-            <div class="challenge-card" id="challenge1">
-                <div class="challenge-header">
-                    <div class="challenge-title">規格猜型號</div>
-                    <div class="challenge-points">+10 分</div>
-                </div>
-                <div class="challenge-content" id="content1">
-                    <!-- 題目內容將由JavaScript動態生成 -->
-                </div>
-                <div class="options" id="options1">
-                    <!-- 選項將由JavaScript動態生成 -->
-                </div>
+        <!-- 遊戲數據分析面板 -->
+        <div class="analytics-panel" id="analyticsPanel" style="display: none;">
+            <div class="analytics-tabs">
+                <button class="tab-btn active" data-tab="overview">📊 總覽</button>
+                <button class="tab-btn" data-tab="category">📚 類別分析</button>
+                <button class="tab-btn" data-tab="mistakes">❌ 錯誤分析</button>
+                <button class="tab-btn" data-tab="progress">📈 進度</button>
             </div>
             
-            <div class="challenge-card" id="challenge2">
-                <div class="challenge-header">
-                    <div class="challenge-title">型號猜規格</div>
-                    <div class="challenge-points">+10 分</div>
-                </div>
-                <div class="challenge-content" id="content2">
-                    <!-- 題目內容將由JavaScript動態生成 -->
-                </div>
-                <div class="options" id="options2">
-                    <!-- 選項將由JavaScript動態生成 -->
-                </div>
-            </div>
-            
-            <div class="challenge-card" id="challenge3">
-                <div class="challenge-header">
-                    <div class="challenge-title">年份與價格</div>
-                    <div class="challenge-points">+10 分</div>
-                </div>
-                <div class="challenge-content" id="content3">
-                    <!-- 題目內容將由JavaScript動態生成 -->
-                </div>
-                <div class="options" id="options3">
-                    <!-- 選項將由JavaScript動態生成 -->
-                </div>
-            </div>
-            
-            <div class="challenge-card" id="challenge4">
-                <div class="challenge-header">
-                    <div class="challenge-title">作業系統版本</div>
-                    <div class="challenge-points">+10 分</div>
-                </div>
-                <div class="challenge-content" id="content4">
-                    <!-- 題目內容將由JavaScript動態生成 -->
-                </div>
-                <div class="options" id="options4">
-                    <!-- 選項將由JavaScript動態生成 -->
-                </div>
-            </div>
-        </div>
-        
-        <div class="bonus-challenge" id="bonusChallenge">
-            <div class="bonus-header">
-                <div class="bonus-title">額外挑戰</div>
-                <div class="bonus-points">+15 分</div>
-            </div>
-            <div class="challenge-content" id="bonusContent">
-                <!--    目內容將由JavaScript動態生成 -->
-            </div>
-            <div class="options" id="bonusOptions">
-                <!-- 選項將由JavaScript動態生成 -->
-            </div>
-        </div>
-        
-            <div class="controls">
-                <button id="backToHomeBtn">返回到主頁</button>
-
-                <!-- 遊戲平台工具包 -->
-                <div style="margin: 15px 0; padding: 15px; background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 130, 0.1)); border: 2px solid rgba(138, 43, 226, 0.5); border-radius: 12px;">
-                    <div style="font-size: 18px; font-weight: bold; color: #da70d6; margin-bottom: 12px; text-align: center;">
-                        🎮 遊戲平台工具包
+            <!-- 標籤1: 總覽 -->
+            <div class="tab-content active" id="overview-tab">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-label">正確率</div>
+                        <div class="stat-value" id="accuracyValue">0%</div>
+                        <div class="stat-subtitle">答對率</div>
                     </div>
-
-                    <!-- 挑戰加速器 -->
-                    <div style="margin-bottom: 15px; padding: 12px; background: rgba(0, 168, 255, 0.1); border: 2px solid rgba(0, 168, 255, 0.4); border-radius: 8px;">
-                        <div style="font-size: 16px; font-weight: bold; color: #4cd0ff; margin-bottom: 8px; text-align: center;">
-                            ⚡ 挑戰加速器
-                        </div>
-                        <div style="font-size: 12px; color: #b0b0b0; line-height: 1.5; margin-bottom: 10px; text-align: center;">
-                            購買加速器跳過關卡，節省時間直達高難度挑戰！<br>
-                            <span style="color: #ff8c00; font-weight: bold;">注意：跳過的關卡不計分，不增加金幣</span>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 10px;">
-                            <button id="accelerator1Btn" class="accelerator-btn" data-cost="300" data-skip="2" style="background: linear-gradient(135deg, #4cd0ff 0%, #00a8ff 100%); color: #fff; font-weight: bold; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.3s;">
-                                ⭐ 輕度加速 - 300金幣 (跳2關)
-                            </button>
-                            <button id="accelerator2Btn" class="accelerator-btn" data-cost="550" data-skip="3" style="background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%); color: #fff; font-weight: bold; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.3s;">
-                                🚀 標準加速 - 550金幣 (跳3關)
-                            </button>
-                            <button id="accelerator3Btn" class="accelerator-btn" data-cost="1000" data-skip="5" style="background: linear-gradient(135deg, #ff3750 0%, #ff1744 100%); color: #fff; font-weight: bold; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.3s;">
-                                ⚡ 極速加速 - 1000金幣 (跳5關)
-                            </button>
-                        </div>
-                        <div style="font-size: 11px; color: #808080; line-height: 1.4; text-align: center;">
-                            💰 賺取所需題數參考：<br>
-                            輕度 (300💰) ≈30題基礎 | 標準 (550💰) ≈55題基礎 | 極速 (1000💰) ≈100題基礎
-                        </div>
-                    </div>
-
                     
-                
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-label">總分</div>
+                        <div class="stat-value" id="totalScoreValue">0</div>
+                        <div class="stat-subtitle">累積成績</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">🎮</div>
+                        <div class="stat-label">已玩遊戲</div>
+                        <div class="stat-value" id="gamesPlayedValue">0</div>
+                        <div class="stat-subtitle">次數</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-label">連擊紀錄</div>
+                        <div class="stat-value" id="maxComboValue">0</div>
+                        <div class="stat-subtitle">當前</div>
+                    </div>
+                </div>
             </div>
-        
+            
+            <!-- 標籤2: 類別分析 -->
+            <div class="tab-content" id="category-tab">
+                <div class="analysis-header">各類別表現</div>
+                <div class="category-list" id="categoryList">
+                    <!-- 動態生成 -->
+                </div>
+            </div>
+            
+            <!-- 標籤3: 錯誤分析 -->
+            <div class="tab-content" id="mistakes-tab">
+                <div class="analysis-header">最容易出錯的題目</div>
+                <div class="mistakes-list" id="mistakesList">
+                    <!-- 動態生成 -->
+                </div>
+            </div>
+            
+            <!-- 標籤4: 進度曲線 -->
+            <div class="tab-content" id="progress-tab">
+                <div class="analysis-header">學習進度 (近30天)</div>
+                <div id="progressChart">
+                    <p style="text-align: center; color: rgba(255,255,255,0.7);">進度數據會根據您的遊戲記錄實時更新</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; text-align: center;">
+                <button id="closeAnalyticsBtn" style="background: linear-gradient(135deg, #ff6b6b, #ff5252); color: #fff; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: bold;">關閉統計面板</button>
+            </div>
+        </div>
 
         <div class="result-modal" id="resultModal">
             <div class="modal-content">
@@ -3295,6 +3514,242 @@
     </div>
 
     <script>
+        // ========== HINT SYSTEM CLASS ==========
+        class HintSystem {
+            constructor() {
+                this.usedHintsPerQuestion = {
+                    remove: 0,
+                    smart: 0,
+                    time: 0
+                };
+                this.hintCosts = {
+                    remove: 100,
+                    smart: 150,
+                    time: 200
+                };
+                this.currentQuestionData = null;
+            }
+
+            removeIncorrectOption() {
+                if (!this.canUseHint('remove')) return false;
+                if (coins < 100) {
+                    showAlert('金幣不足，需要100金幣');
+                    return false;
+                }
+
+                const optionsContainer = document.querySelector('.options');
+                if (!optionsContainer) return false;
+
+                const options = optionsContainer.querySelectorAll('.option-btn:not(.disabled)');
+                if (options.length <= 1) {
+                    showAlert('沒有可消除的選項');
+                    return false;
+                }
+
+                // 找出錯誤選項
+                const incorrectOptions = [];
+                options.forEach(opt => {
+                    if (opt.dataset.correct !== 'true') {
+                        incorrectOptions.push(opt);
+                    }
+                });
+
+                if (incorrectOptions.length === 0) {
+                    showAlert('無法移除選項');
+                    return false;
+                }
+
+                // 隨機移除一個錯誤選項
+                const toRemove = incorrectOptions[Math.floor(Math.random() * incorrectOptions.length)];
+                toRemove.style.opacity = '0.3';
+                toRemove.style.pointerEvents = 'none';
+                toRemove.classList.add('disabled');
+
+                coins -= 100;
+                updateScore();
+                this.usedHintsPerQuestion.remove++;
+                this.showHintNotification('✅ 已消除一個選項');
+                return true;
+            }
+
+            showSmartHint() {
+                if (!this.canUseHint('smart')) return false;
+                if (coins < 150) {
+                    showAlert('金幣不足，需要150金幣');
+                    return false;
+                }
+
+                const hints = [
+                    '💡 根據題目描述，仔細分析所有細節',
+                    '💡 這道題目考查的是核心知識點',
+                    '💡 嘗試排除明顯錯誤的選項',
+                    '💡 思考題目背後的邏輯關聯',
+                    '💡 比較不同選項之間的差異'
+                ];
+
+                const randomHint = hints[Math.floor(Math.random() * hints.length)];
+                showAlert(randomHint);
+
+                coins -= 150;
+                updateScore();
+                this.usedHintsPerQuestion.smart++;
+                return true;
+            }
+
+            extendTime() {
+                if (!this.canUseHint('time')) return false;
+                if (coins < 200) {
+                    showAlert('金幣不足，需要200金幣');
+                    return false;
+                }
+
+                window.timeRemaining = (window.timeRemaining || 0) + 15;
+                updateTimerDisplay();
+
+                coins -= 200;
+                updateScore();
+                this.usedHintsPerQuestion.time++;
+                this.showHintNotification('⏱️ 已延長15秒答題時間');
+                return true;
+            }
+
+            canUseHint(hintType) {
+                const maxUses = { remove: 2, smart: 1, time: 1 };
+                return this.usedHintsPerQuestion[hintType] < (maxUses[hintType] || 0);
+            }
+
+            showHintNotification(message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #4cd0ff, #00a8ff);
+                    color: #000;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => notification.remove(), 3000);
+            }
+
+            resetHints() {
+                this.usedHintsPerQuestion = { remove: 0, smart: 0, time: 0 };
+            }
+        }
+
+        // ========== GAME ANALYTICS CLASS ==========
+        class GameAnalytics {
+            constructor() {
+                this.playerData = {
+                    totalGames: 0,
+                    totalQuestions: 0,
+                    correctAnswers: 0,
+                    wrongAnswers: 0,
+                    totalScore: 0,
+                    maxCombo: 0,
+                    categoryStats: {},
+                    levelStats: {},
+                    mistakeAnalysis: {},
+                    gameSessions: []
+                };
+                this.loadFromLocalStorage();
+            }
+
+            recordAnswer(isCorrect, questionText, categoryName) {
+                this.playerData.totalQuestions++;
+                if (isCorrect) {
+                    this.playerData.correctAnswers++;
+                } else {
+                    this.playerData.wrongAnswers++;
+                    this.recordMistake(questionText, categoryName);
+                }
+                this.saveToLocalStorage();
+            }
+
+            recordGameSession(sessionData) {
+                this.playerData.gameSessions.push({
+                    date: new Date().toISOString(),
+                    ...sessionData
+                });
+                this.playerData.totalScore += (sessionData.score || 0);
+                this.playerData.totalGames++;
+                if ((sessionData.combo || 0) > this.playerData.maxCombo) {
+                    this.playerData.maxCombo = sessionData.combo;
+                }
+                this.saveToLocalStorage();
+            }
+
+            recordMistake(questionText, categoryName) {
+                const key = questionText.substring(0, 50);
+                if (!this.playerData.mistakeAnalysis[key]) {
+                    this.playerData.mistakeAnalysis[key] = {
+                        question: questionText,
+                        category: categoryName,
+                        wrongCount: 0,
+                        correctCount: 0
+                    };
+                }
+                this.playerData.mistakeAnalysis[key].wrongCount++;
+            }
+
+            getAccuracy() {
+                const total = this.playerData.correctAnswers + this.playerData.wrongAnswers;
+                if (total === 0) return 0;
+                return ((this.playerData.correctAnswers / total) * 100).toFixed(1);
+            }
+
+            getTopMistakes(limit = 5) {
+                return Object.values(this.playerData.mistakeAnalysis)
+                    .sort((a, b) => b.wrongCount - a.wrongCount)
+                    .slice(0, limit);
+            }
+
+            saveToLocalStorage() {
+                try {
+                    localStorage.setItem('gameAnalytics', JSON.stringify(this.playerData));
+                } catch (e) {
+                    console.error('Failed to save analytics:', e);
+                }
+            }
+
+            loadFromLocalStorage() {
+                try {
+                    const saved = localStorage.getItem('gameAnalytics');
+                    if (saved) {
+                        this.playerData = JSON.parse(saved);
+                    }
+                } catch (e) {
+                    console.error('Failed to load analytics:', e);
+                }
+            }
+
+            reset() {
+                this.playerData = {
+                    totalGames: 0,
+                    totalQuestions: 0,
+                    correctAnswers: 0,
+                    wrongAnswers: 0,
+                    totalScore: 0,
+                    maxCombo: 0,
+                    categoryStats: {},
+                    levelStats: {},
+                    mistakeAnalysis: {},
+                    gameSessions: []
+                };
+                localStorage.removeItem('gameAnalytics');
+            }
+        }
+
+        // 全局實例
+        let hintSystem = new HintSystem();
+        let gameAnalytics = new GameAnalytics();
+
         // 手機資料庫 - 包含各種品牌、世代、價位和級別的手機
         const phoneDatabase = [
             // === Apple iPhone 系列 ===
@@ -5353,16 +5808,512 @@
                 releaseYear: 2024,
                 price: 3999,
                 os: "Android 14 (Flyme 11)"
+            },
+
+            // iPhone 17 系列 - 最新旗艦 2025
+            {
+                brand: "Apple",
+                model: "iPhone 17 Pro Max",
+                specs: {
+                    display: "6.9吋 Super Retina XDR OLED",
+                    chip: "A19 Pro",
+                    storage: "256GB/512GB/1TB",
+                    camera: "48MP主鏡頭 + 12MP超廣角 + 12MP5倍望遠 + 12MP3倍望遠",
+                    battery: "4700mAh"
+                },
+                releaseYear: 2025,
+                price: 10699,
+                os: "iOS 26.1"
+            },
+            {
+                brand: "Apple",
+                model: "iPhone 17 Pro",
+                specs: {
+                    display: "6.3吋 Super Retina XDR OLED",
+                    chip: "A19 Pro",
+                    storage: "256GB/512GB/1TB",
+                    camera: "48MP主鏡頭 + 12MP超廣角 + 12MP5倍望遠",
+                    battery: "3550mAh"
+                },
+                releaseYear: 2025,
+                price: 9199,
+                os: "iOS 26.1"
+            },
+            {
+                brand: "Apple",
+                model: "iPhone 17",
+                specs: {
+                    display: "6.2吋 Super Retina XDR OLED",
+                    chip: "A19",
+                    storage: "128GB/256GB/512GB",
+                    camera: "48MP主鏡頭 + 12MP超廣角",
+                    battery: "3600mAh"
+                },
+                releaseYear: 2025,
+                price: 6299,
+                os: "iOS 26.1"
+            },
+            {
+                brand: "Apple",
+                model: "iPhone 17 Plus",
+                specs: {
+                    display: "6.7吋 Super Retina XDR OLED",
+                    chip: "A19",
+                    storage: "128GB/256GB/512GB",
+                    camera: "48MP主鏡頭 + 12MP超廣角",
+                    battery: "4300mAh"
+                },
+                releaseYear: 2025,
+                price: 7299,
+                os: "iOS 26.1"
+            },
+
+            // iPhone 16 系列 - 2024新發布
+            {
+                brand: "Apple",
+                model: "iPhone 16 Pro Max",
+                specs: {
+                    display: "6.9吋 Super Retina XDR OLED",
+                    chip: "A18 Pro",
+                    storage: "256GB/512GB/1TB",
+                    camera: "48MP主鏡頭 + 12MP超廣角 + 12MP5倍望遠 + 12MP3倍望遠",
+                    battery: "4685mAh"
+                },
+                releaseYear: 2024,
+                price: 10199,
+                os: "iOS 26"
+            },
+            {
+                brand: "Apple",
+                model: "iPhone 16 Pro",
+                specs: {
+                    display: "6.3吋 Super Retina XDR OLED",
+                    chip: "A18 Pro",
+                    storage: "256GB/512GB/1TB",
+                    camera: "48MP主鏡頭 + 12MP超廣角 + 12MP5倍望遠",
+                    battery: "3485mAh"
+                },
+                releaseYear: 2024,
+                price: 8699,
+                os: "iOS 26"
+            },
+            {
+                brand: "Apple",
+                model: "iPhone 16",
+                specs: {
+                    display: "6.1吋 Super Retina XDR OLED",
+                    chip: "A18",
+                    storage: "128GB/256GB/512GB",
+                    camera: "48MP主鏡頭 + 12MP超廣角",
+                    battery: "3582mAh"
+                },
+                releaseYear: 2024,
+                price: 5999,
+                os: "iOS 26"
+            },
+            {
+                brand: "Apple",
+                model: "iPhone 16 Plus",
+                specs: {
+                    display: "6.7吋 Super Retina XDR OLED",
+                    chip: "A18",
+                    storage: "128GB/256GB/512GB",
+                    camera: "48MP主鏡頭 + 12MP超廣角",
+                    battery: "4685mAh"
+                },
+                releaseYear: 2024,
+                price: 6999,
+                os: "iOS 26"
+            },
+
+            // 三星 Galaxy S25 系列 - 2025旗艦
+            {
+                brand: "Samsung",
+                model: "Samsung Galaxy S25 Ultra",
+                specs: {
+                    display: "6.9吋 Dynamic AMOLED 2X",
+                    chip: "Snapdragon 8 Elite",
+                    storage: "256GB/512GB/1TB",
+                    camera: "200MP主鏡頭 + 50MP超廣角 + 50MP3倍望遠 + 10MP5倍望遠",
+                    battery: "5000mAh"
+                },
+                releaseYear: 2025,
+                price: 11999,
+                os: "Android 15 (One UI 8)"
+            },
+            {
+                brand: "Samsung",
+                model: "Samsung Galaxy S25+",
+                specs: {
+                    display: "6.7吋 Dynamic AMOLED 2X",
+                    chip: "Snapdragon 8 Elite",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 12MP超廣角 + 50MP3倍望遠",
+                    battery: "4900mAh"
+                },
+                releaseYear: 2025,
+                price: 8999,
+                os: "Android 15 (One UI 8)"
+            },
+            {
+                brand: "Samsung",
+                model: "Samsung Galaxy S25",
+                specs: {
+                    display: "6.2吋 Dynamic AMOLED 2X",
+                    chip: "Snapdragon 8 Elite",
+                    storage: "128GB/256GB/512GB",
+                    camera: "50MP主鏡頭 + 12MP超廣角 + 50MP3倍望遠",
+                    battery: "4000mAh"
+                },
+                releaseYear: 2025,
+                price: 6999,
+                os: "Android 15 (One UI 8)"
+            },
+
+            // 三星摺疊手機
+            {
+                brand: "Samsung",
+                model: "Samsung Galaxy Z Fold 6",
+                specs: {
+                    display: "7.6吋內屏 Dynamic AMOLED 2X / 6.3吋外屏",
+                    chip: "Snapdragon 8 Gen 3",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 10MP超廣角 + 3MP望遠",
+                    battery: "4400mAh"
+                },
+                releaseYear: 2024,
+                price: 14999,
+                os: "Android 14 (One UI 7)"
+            },
+            {
+                brand: "Samsung",
+                model: "Samsung Galaxy Z Flip 6",
+                specs: {
+                    display: "6.7吋主屏 Dynamic AMOLED 2X / 3.4吋副屏OLED",
+                    chip: "Snapdragon 8 Gen 3",
+                    storage: "128GB/256GB/512GB",
+                    camera: "50MP主鏡頭 + 12MP超廣角",
+                    battery: "4000mAh"
+                },
+                releaseYear: 2024,
+                price: 9499,
+                os: "Android 14 (One UI 7)"
+            },
+
+            // 榮耀 Honor X9C/X9D 系列
+            {
+                brand: "Honor",
+                model: "Honor X9D",
+                specs: {
+                    display: "6.78吋AMOLED",
+                    chip: "Snapdragon 7 Gen 3",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 8MP超廣角 + 2MP微距",
+                    battery: "5920mAh"
+                },
+                releaseYear: 2024,
+                price: 2499,
+                os: "Android 14 (MagicOS 9)"
+            },
+            {
+                brand: "Honor",
+                model: "Honor X9C",
+                specs: {
+                    display: "6.78吋AMOLED",
+                    chip: "Snapdragon 7 Gen 2 Pro",
+                    storage: "256GB",
+                    camera: "50MP主鏡頭 + 8MP超廣角",
+                    battery: "5880mAh"
+                },
+                releaseYear: 2023,
+                price: 2099,
+                os: "Android 13 (MagicOS 8)"
+            },
+
+            // 榮耀旗艦系列 - Honor Magic 8 Pro / Honor 400
+            {
+                brand: "Honor",
+                model: "Honor Magic 8 Pro",
+                specs: {
+                    display: "6.9吋AMOLED",
+                    chip: "Snapdragon 8 Gen 3 Leading Version",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 40MP超廣角 + 50MP3倍望遠 + 50MP潛望式望遠",
+                    battery: "5850mAh"
+                },
+                releaseYear: 2024,
+                price: 5999,
+                os: "Android 14 (MagicOS 10)"
+            },
+            {
+                brand: "Honor",
+                model: "Honor 400",
+                specs: {
+                    display: "6.89吋AMOLED",
+                    chip: "Snapdragon 8 Gen 3",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 12MP超廣角 + 50MP望遠",
+                    battery: "5110mAh"
+                },
+                releaseYear: 2024,
+                price: 4299,
+                os: "Android 14 (MagicOS 10)"
+            },
+
+            // 紅米 Redmi Note 15/14 系列
+            {
+                brand: "Redmi",
+                model: "Redmi Note 15",
+                specs: {
+                    display: "6.67吋AMOLED",
+                    chip: "MediaTek Dimensity 8300-Ultra",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 8MP超廣角 + 2MP微距",
+                    battery: "5110mAh"
+                },
+                releaseYear: 2024,
+                price: 1999,
+                os: "Android 14 (HyperOS 2.0)"
+            },
+            {
+                brand: "Redmi",
+                model: "Redmi Note 15 Pro",
+                specs: {
+                    display: "6.67吋AMOLED",
+                    chip: "Snapdragon 7 Gen 3 Leading",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 12MP超廣角 + 50MP望遠",
+                    battery: "5110mAh"
+                },
+                releaseYear: 2024,
+                price: 2599,
+                os: "Android 14 (HyperOS 2.0)"
+            },
+            {
+                brand: "Redmi",
+                model: "Redmi Note 14",
+                specs: {
+                    display: "6.67吋AMOLED",
+                    chip: "Snapdragon 7 Gen 3",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 8MP超廣角",
+                    battery: "5000mAh"
+                },
+                releaseYear: 2024,
+                price: 1699,
+                os: "Android 14 (HyperOS 1.0)"
+            },
+
+            // 小米 Xiaomi 15 系列 - 2025新旗艦
+            {
+                brand: "Xiaomi",
+                model: "Xiaomi 15 Ultra",
+                specs: {
+                    display: "6.73吋AMOLED",
+                    chip: "Snapdragon 8 Elite",
+                    storage: "512GB/1TB",
+                    camera: "50MP主鏡頭 + 50MP超廣角 + 50MP3.2倍望遠 + 50MP5倍望遠",
+                    battery: "6300mAh"
+                },
+                releaseYear: 2025,
+                price: 6299,
+                os: "Android 15 (HyperOS 3.0)"
+            },
+            {
+                brand: "Xiaomi",
+                model: "Xiaomi 15",
+                specs: {
+                    display: "6.36吋AMOLED",
+                    chip: "Snapdragon 8 Elite",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 50MP超廣角 + 50MP3.2倍望遠",
+                    battery: "5500mAh"
+                },
+                releaseYear: 2025,
+                price: 4499,
+                os: "Android 15 (HyperOS 3.0)"
+            },
+
+            // OPPO X300 系列 - 旗艦超廣角
+            {
+                brand: "OPPO",
+                model: "OPPO X300",
+                specs: {
+                    display: "6.75吋AMOLED",
+                    chip: "Snapdragon 8 Gen 3",
+                    storage: "512GB",
+                    camera: "50MP主鏡頭 + 50MP廣角(120°) + 50MP望遠",
+                    battery: "5900mAh"
+                },
+                releaseYear: 2024,
+                price: 5499,
+                os: "Android 14 (ColorOS 15)"
+            },
+
+            // OPPO Find N5 - 摺疊旗艦
+            {
+                brand: "OPPO",
+                model: "OPPO Find N5",
+                specs: {
+                    display: "8.4吋內屏AMOLED / 6.4吋外屏",
+                    chip: "Snapdragon 8 Gen 3",
+                    storage: "512GB",
+                    camera: "50MP主鏡頭 + 50MP超廣角 + 50MP3倍望遠",
+                    battery: "5900mAh"
+                },
+                releaseYear: 2024,
+                price: 7999,
+                os: "Android 14 (ColorOS 15)"
+            },
+
+            // vivo X Fold 3 - 摺疊旗艦
+            {
+                brand: "vivo",
+                model: "vivo X Fold 3",
+                specs: {
+                    display: "8.03吋內屏AMOLED / 6.4吋外屏",
+                    chip: "Snapdragon 8 Gen 3",
+                    storage: "512GB",
+                    camera: "50MP主鏡頭 + 48MP超廣角 + 12MP望遠",
+                    battery: "5900mAh"
+                },
+                releaseYear: 2024,
+                price: 7999,
+                os: "Android 14 (OriginOS 4)"
+            },
+
+            // 華為 Huawei Pura 80 系列
+            {
+                brand: "Huawei",
+                model: "Huawei Pura 80 Pro",
+                specs: {
+                    display: "6.8吋AMOLED",
+                    chip: "Kirin 9020",
+                    storage: "512GB",
+                    camera: "50MP主鏡頭 + 48MP超廣角 + 12MP3倍望遠 + 12MP潛望式望遠",
+                    battery: "5110mAh"
+                },
+                releaseYear: 2024,
+                price: 5599,
+                os: "Android 14 (HarmonyOS 4)"
+            },
+            {
+                brand: "Huawei",
+                model: "Huawei Pura 80",
+                specs: {
+                    display: "6.7吋AMOLED",
+                    chip: "Kirin 9020",
+                    storage: "256GB/512GB",
+                    camera: "50MP主鏡頭 + 40MP超廣角 + 12MP望遠",
+                    battery: "4900mAh"
+                },
+                releaseYear: 2024,
+                price: 3999,
+                os: "Android 14 (HarmonyOS 4)"
             }
         ];
 
         // 手機題庫（mobileQuestions）- 包含最新、較舊及舊款、旗艦、中階、入門範例 -(為第1-20關設計)
         const mobileQuestions = [
+            // iPhone 系列
             { question: "iPhone 目前主流的系列是哪一個？", options: ["iPhone 16 系列", "iPhone 17 系列", "iPhone 12 系列", "iPhone X 系列"], correct: 1 },
+            { question: "iPhone 17 Pro Max 的屏幕尺寸為？", options: ["6.3吋", "6.7吋", "6.9吋", "7.0吋"], correct: 2 },
+            { question: "iPhone 17 Pro 配備的處理器是？", options: ["A18", "A19 Pro", "A19", "A20"], correct: 1 },
+            { question: "iPhone 16 的主相機像素為？", options: ["12MP", "48MP", "50MP", "64MP"], correct: 1 },
+            { question: "iPhone 16 Pro Max 配備的最大儲存容量為？", options: ["512GB", "1TB", "2TB", "256GB"], correct: 1 },
+            { question: "iPhone 17 系列搭載的 iOS 版本為？", options: ["iOS 25", "iOS 26.1", "iOS 27", "iOS 26.2"], correct: 1 },
+            { question: "iPhone 16 Pro 有多少個後置相機？", options: ["2個", "3個", "4個", "5個"], correct: 1 },
+            { question: "iPhone 17 Plus 的電池容量為多少？", options: ["3600mAh", "4300mAh", "4700mAh", "5000mAh"], correct: 1 },
+
+            // Samsung Galaxy 系列
             { question: "下列哪一個是三星旗艦系列？", options: ["Galaxy A 系列", "Galaxy C 系列", "Galaxy S 系列 (例如 S25 Ultra)", "Galaxy M 系列"], correct: 2 },
-            { question: "MTK 最新旗艦處理器型號範例為？", options: ["MTK 7000", "MTK 8000", "MTK 9500", "MTK 600"], correct: 2 },
+            { question: "Samsung Galaxy S25 Ultra 的最高儲存容量為？", options: ["512GB", "1TB", "256GB", "128GB"], correct: 1 },
+            { question: "Samsung Galaxy S25 Ultra 搭載的處理器為？", options: ["Snapdragon 8 Gen 2", "Snapdragon 8 Gen 3", "Snapdragon 8 Elite", "Exynos 2500"], correct: 2 },
+            { question: "Samsung Galaxy S25 Ultra 主相機像素為？", options: ["108MP", "200MP", "50MP", "64MP"], correct: 1 },
+            { question: "Samsung Galaxy S25 搭載的作業系統版本為？", options: ["Android 14", "Android 15 One UI 8", "Android 15 One UI 7", "Android 13"], correct: 1 },
+            { question: "Samsung Galaxy Z Fold 6 的內屏尺寸為？", options: ["6.3吋", "7.6吋", "7.2吋", "8.0吋"], correct: 1 },
+            { question: "Samsung Galaxy Z Flip 6 的電池容量為？", options: ["3600mAh", "4000mAh", "4400mAh", "3800mAh"], correct: 1 },
+            { question: "Samsung Galaxy Z Fold 6 搭載的處理器為？", options: ["Snapdragon 8 Gen 2", "Snapdragon 8 Gen 3", "Snapdragon 7 Gen 3", "Exynos 2400"], correct: 1 },
+
+            // Honor 系列
             { question: "榮耀手機最新作業系統名為？", options: ["Magic UI 5", "Magic OS 10", "Honor OS 9", "HarmonyOS 4"], correct: 1 },
-            { question: "手機定位為入門/中階/旗艦，下列哪個車系通常為中階/入門？", options: ["Samsung A 系列", "iPhone Pro 系列", "Samsung S Ultra 系列", "Sony Xperia Pro"], correct: 0 }
+            { question: "Honor X9D 的處理器為？", options: ["Snapdragon 7 Gen 3", "Snapdragon 8 Gen 2", "Snapdragon 6 Gen 1", "MediaTek Dimensity 8300"], correct: 0 },
+            { question: "Honor X9D 的電池容量為？", options: ["5000mAh", "5880mAh", "5920mAh", "5110mAh"], correct: 2 },
+            { question: "Honor Magic 8 Pro 搭載的處理器為？", options: ["Snapdragon 8 Gen 3", "Snapdragon 8 Gen 3 Leading", "Snapdragon 8 Elite", "Snapdragon 7 Gen 3"], correct: 1 },
+            { question: "Honor 400 的屏幕尺寸為？", options: ["6.7吋", "6.89吋", "6.9吋", "6.8吋"], correct: 1 },
+            { question: "Honor Magic 8 Pro 搭載的作業系統為？", options: ["MagicOS 9", "MagicOS 10", "Android 14", "HarmonyOS 4"], correct: 1 },
+
+            // Xiaomi 小米系列
+            { question: "Xiaomi 15 Ultra 的電池容量為？", options: ["5500mAh", "5900mAh", "6300mAh", "5000mAh"], correct: 2 },
+            { question: "Xiaomi 15 系列搭載的作業系統為？", options: ["Android 14", "Android 15 HyperOS 3.0", "Android 15 HyperOS 2.0", "Android 13"], correct: 1 },
+            { question: "Xiaomi 15 Ultra 搭載的處理器為？", options: ["Snapdragon 8 Gen 3", "Snapdragon 8 Elite", "Snapdragon 8 Gen 2", "MediaTek Dimensity 9400"], correct: 1 },
+            { question: "Xiaomi 15 Ultra 主相機像素為？", options: ["48MP", "50MP", "64MP", "108MP"], correct: 1 },
+            { question: "Xiaomi 15 的屏幕尺寸為？", options: ["6.36吋", "6.5吋", "6.73吋", "6.7吋"], correct: 0 },
+
+            // Redmi 紅米系列
+            { question: "Redmi Note 15 的電池容量為？", options: ["5000mAh", "5110mAh", "4900mAh", "4500mAh"], correct: 1 },
+            { question: "Redmi Note 15 Pro 搭載的處理器為？", options: ["Snapdragon 7 Gen 3", "Snapdragon 7 Gen 3 Leading", "Snapdragon 6 Gen 1", "MediaTek Dimensity 8300"], correct: 1 },
+            { question: "Redmi Note 14 的屏幕尺寸為？", options: ["6.5吋", "6.67吋", "6.7吋", "6.8吋"], correct: 1 },
+            { question: "Redmi Note 15 搭載的作業系統為？", options: ["Android 14 HyperOS 1.0", "Android 14 HyperOS 2.0", "Android 13", "Android 15"], correct: 1 },
+
+            // OPPO 系列
+            { question: "OPPO X300 的屏幕尺寸為？", options: ["6.5吋", "6.75吋", "6.9吋", "7.0吋"], correct: 1 },
+            { question: "OPPO X300 主相機像素為？", options: ["48MP", "50MP", "64MP", "108MP"], correct: 1 },
+            { question: "OPPO Find N5 內屏尺寸為？", options: ["8.0吋", "8.4吋", "8.2吋", "7.8吋"], correct: 1 },
+            { question: "OPPO Find N5 搭載的處理器為？", options: ["Snapdragon 8 Gen 2", "Snapdragon 8 Gen 3", "Snapdragon 7 Gen 3", "MediaTek Dimensity 9400"], correct: 1 },
+            { question: "OPPO X300 的儲存容量為？", options: ["256GB", "512GB", "256GB/512GB", "512GB"], correct: 3 },
+
+            // vivo 系列
+            { question: "vivo X Fold 3 的內屏尺寸為？", options: ["7.8吋", "8.03吋", "8.5吋", "8.2吋"], correct: 1 },
+            { question: "vivo X Fold 3 搭載的處理器為？", options: ["Snapdragon 8 Gen 2", "Snapdragon 8 Gen 3", "MediaTek Dimensity 9400", "Snapdragon 7 Gen 3"], correct: 1 },
+            { question: "vivo X Fold 3 的電池容量為？", options: ["5500mAh", "5900mAh", "4900mAh", "5000mAh"], correct: 1 },
+
+            // Huawei 華為系列
+            { question: "Huawei Pura 80 Pro 的屏幕尺寸為？", options: ["6.5吋", "6.8吋", "6.9吋", "7.0吋"], correct: 1 },
+            { question: "Huawei Pura 80 Pro 搭載的處理器為？", options: ["Snapdragon 8 Gen 3", "Kirin 9020", "Kirin 9010", "MediaTek Dimensity 9400"], correct: 1 },
+            { question: "Huawei Pura 80 Pro 主相機像素為？", options: ["48MP", "50MP", "64MP", "12MP"], correct: 1 },
+
+            // CPU/GPU 規格題
+            { question: "Snapdragon 8 Elite 比 8 Gen 3 的性能提升約為？", options: ["10%", "20%", "30%", "50%"], correct: 2 },
+            { question: "A19 Pro 相比 A18 在 CPU 上的提升主要為？", options: ["時鐘速度", "核心數量", "架構優化", "內存帶寬"], correct: 2 },
+            { question: "MediaTek Dimensity 9400 的 GPU 為？", options: ["Mali-G715", "Adreno 750", "Mali-G77", "Immortalis-G720"], correct: 0 },
+
+            // 電池容量題
+            { question: "下列手機中電池容量最大的是？", options: ["Xiaomi 15 Ultra 6300mAh", "iPhone 17 Pro Max 4700mAh", "Samsung S25 Ultra 5000mAh", "OPPO Find N5 5900mAh"], correct: 0 },
+            { question: "iPhone 17 Plus 與 iPhone 17 的電池容量差異為？", options: ["500mAh", "700mAh", "1000mAh", "200mAh"], correct: 0 },
+
+            // 相機規格題
+            { question: "iPhone 17 Pro Max 有幾個後置相機？", options: ["2個", "3個", "4個", "1個"], correct: 2 },
+            { question: "Samsung Galaxy S25 Ultra 的超廣角相機像素為？", options: ["12MP", "40MP", "50MP", "200MP"], correct: 2 },
+            { question: "Honor Magic 8 Pro 配備幾個後置相機？", options: ["2個", "3個", "4個", "5個"], correct: 2 },
+            { question: "下列哪款手機配備潛望式望遠鏡頭？", options: ["iPhone 17", "Honor Magic 8 Pro", "Redmi Note 15", "vivo X Fold 3"], correct: 1 },
+
+            // 屏幕尺寸題
+            { question: "目前主流旗艦手機的屏幕尺寸通常為？", options: ["5.5-6.0吋", "6.5-7.0吋", "7.5-8.0吋", "6.0-6.5吋"], correct: 1 },
+            { question: "摺疊手機（如 Galaxy Z Fold 6）的外屏尺寸通常為？", options: ["5.0-5.5吋", "6.0-6.5吋", "7.0-7.5吋", "8.0-8.5吋"], correct: 1 },
+
+            // 作業系統題
+            { question: "HyperOS 最新版本號為？", options: ["HyperOS 1.0", "HyperOS 2.0", "HyperOS 3.0", "HyperOS 4.0"], correct: 2 },
+            { question: "MagicOS 最新版本號為？", options: ["MagicOS 8", "MagicOS 9", "MagicOS 10", "MagicOS 11"], correct: 2 },
+            { question: "One UI 最新版本號為？", options: ["One UI 6", "One UI 7", "One UI 8", "One UI 9"], correct: 2 },
+
+            // 儲存容量題
+            { question: "下列哪款手機提供 1TB 儲存選項？", options: ["iPhone 16", "iPhone 17 Pro Max", "Samsung Galaxy S25", "Redmi Note 15"], correct: 1 },
+            { question: "香港版 iPhone 17 的起始儲存容量為？", options: ["32GB", "64GB", "128GB", "256GB"], correct: 2 },
+
+            // 手機定位題
+            { question: "手機定位為入門/中階/旗艦，下列哪個系列通常為中階/入門？", options: ["Samsung A 系列", "iPhone Pro 系列", "Samsung S Ultra 系列", "Sony Xperia Pro"], correct: 0 },
+            { question: "下列哪個系列的手機定位為旗艦超廣角專業攝影？", options: ["iPhone 16", "OPPO X300", "Redmi Note 15", "Samsung Galaxy A 系列"], correct: 1 },
+            { question: "Redmi Note 系列的手機定位為？", options: ["旗艦", "中階", "入門", "商務"], correct: 1 },
+
+            // 香港定價題
+            { question: "iPhone 17 在香港的起始價格約為？", options: ["4999港幣", "5999港幣", "6999港幣", "7999港幣"], correct: 1 },
+            { question: "Samsung Galaxy S25 在香港的起始價格約為？", options: ["4999港幣", "5999港幣", "6999港幣", "7999港幣"], correct: 2 },
+
+            // 發布年份題
+            { question: "iPhone 17 系列發布於？", options: ["2023年", "2024年", "2025年", "2026年"], correct: 2 },
+            { question: "Samsung Galaxy S25 系列發布於？", options: ["2023年", "2024年", "2025年", "2026年"], correct: 2 },
+            { question: "Xiaomi 15 系列發布於？", options: ["2023年", "2024年", "2025年", "2026年"], correct: 2 }
         ];
 
         // 前端 / 網頁開發題庫（webDevQuestions）
@@ -5416,9 +6367,8 @@
                 { question: "設計內聯網時，哪種做法可提升安全性？", options: ["網路分段、最小權限、加密通訊、定期審計", "開放所有端口讓內部服務直   使用", "共享管理帳號", "不使用日誌紀錄"], correct: 0 }
             ];
             // 合併且去重（以 question 文本為鍵）
-            const existing = typeof intranetQuestions !== 'undefined' ? intranetQuestions : [];
             const map = new Map();
-            existing.concat(extraIntranet).forEach(q => {
+            intranetQuestions.concat(extraIntranet).forEach(q => {
                 if (!map.has(q.question)) map.set(q.question, q);
             });
             // 覆寫原陣列內容
@@ -6414,8 +7364,8 @@
 
         // 计时器相关变量
         let timerInterval = null;
-        let timeRemaining = 25; // 25秒倒计时
-        const TIMER_DURATION = 25;
+        let timeRemaining = 60; // 60秒倒计时
+        const TIMER_DURATION = 60;
         let timerStarted = false; // 追蹤計時器是否已經啟動
         let correctAnswers = 0; // 當前關卡答對的題數
         let sessionStartTime = Date.now(); // 記錄遊戲開始時間
@@ -7605,6 +8555,44 @@
                  case 'doraemon':
                      questionBank = doraemonQuestions;
                      break;
+                 case 'random':
+                     // 隨機題庫：混合所有類別的題目（包含香港相關題目 v2.0.0 升級版本）
+                     const allQuizzes = [
+                         // 科技與編程類
+                         ...aiQuestions,
+                         ...gameDevQuestions,
+                         ...multimediaQuestions,
+                         ...webQuestions,
+                         ...programmingQuestions,
+                         ...securityQuestions,
+                         ...databaseQuestions,
+                         ...retailSystemQuestions,
+                         ...mobileQuestions,
+                         // 文化與娛樂類
+                         ...hikingCampingQuestions,
+                         ...japanDeepDiveQuestions,
+                         ...doraemonQuestions,
+                         ...(typeof paranormalQuestions !== 'undefined' ? paranormalQuestions : []),
+                         ...(typeof medicalEliteQuestions !== 'undefined' ? medicalEliteQuestions : []),
+                         // 香港特色題庫（18區、交通、司法、天氣、Z世代、駕駛、音樂、屋邨、鬼故等）
+                         ...(typeof hk18Questions !== 'undefined' ? hk18Questions : []),
+                         ...(typeof hkBusQuestions !== 'undefined' ? hkBusQuestions : []),
+                         ...(typeof hkMTRQuestions !== 'undefined' ? hkMTRQuestions : []),
+                         ...(typeof hkLRTQuestions !== 'undefined' ? hkLRTQuestions : []),
+                         ...(typeof hkJudiciaryQuestions !== 'undefined' ? hkJudiciaryQuestions : []),
+                         ...(typeof hkWeatherQuestions !== 'undefined' ? hkWeatherQuestions : []),
+                         ...(typeof genZQuestions !== 'undefined' ? genZQuestions : []),
+                         ...(typeof hkTransportQuestions !== 'undefined' ? hkTransportQuestions : []),
+                         ...(typeof hkEstatesQuestions !== 'undefined' ? hkEstatesQuestions : []),
+                         ...(typeof hkDrivingQuestions !== 'undefined' ? hkDrivingQuestions : []),
+                         ...(typeof hkTransportIntegrationQuestions !== 'undefined' ? hkTransportIntegrationQuestions : []),
+                         ...(typeof hkTransportFutureQuestions !== 'undefined' ? hkTransportFutureQuestions : []),
+                         ...(typeof hkTransportTextQuestions !== 'undefined' ? hkTransportTextQuestions : []),
+                         ...(typeof hkMusicQuestions !== 'undefined' ? hkMusicQuestions : []),
+                         ...(typeof window.hkGhostQuestions !== 'undefined' ? window.hkGhostQuestions : [])
+                     ];
+                     questionBank = allQuizzes;
+                     break;
                  case 'phone':
                  default:
                      // 使用原有的手機猜謎邏輯
@@ -8131,6 +9119,12 @@
                 correctAnswers++;
                 levelScore += (questionIndex === 4) ? 15 : 10;
             }
+            
+            // Record analytics data
+            if (typeof gameAnalytics !== 'undefined') {
+                gameAnalytics.recordAnswer(isCorrect, q.question, selectedCategory || 'unknown');
+            }
+            
             updateScore && updateScore();
 
             // 更新进度条和连击计数器
@@ -8488,6 +9482,28 @@
             }, 300);
 
             resultModal.classList.add('active');
+            
+            // Record level completion to analytics
+            if (typeof gameAnalytics !== 'undefined') {
+                gameAnalytics.recordGameSession({
+                    category: selectedCategory || 'unknown',
+                    level: currentLevel,
+                    score: levelScore,
+                    accuracy: (correctAnswers / totalQuestions) * 100,
+                    questionsAttempted: totalQuestions,
+                    correctAnswersCount: correctAnswers
+                });
+                
+                // Update hint system and analytics display
+                if (typeof updateHintButtonStates === 'function') {
+                    updateHintButtonStates();
+                }
+            }
+            
+            // Reset hints for next level
+            if (typeof hintSystem !== 'undefined') {
+                hintSystem.resetHints();
+            }
         }
 
         // 輔助函數：隨機打亂數組
@@ -8913,6 +9929,7 @@
              'multimedia': '多媒體製作應用',
              'japan-deep-dive': '日本深度探究之旅',
              'doraemon': '認識多啦A夢達人挑戰賽',
+             'random': '隨機題庫挑戰',
              'game-dev': '遊戲軟件開   ',
              'retail-system': '零售管理系統',
              'intranet-system': '內聯網及內部管理系統',
@@ -9361,15 +10378,29 @@ function showAlertDialog(message) {
         { category: '解靈方法', question: '民間常見的「解靈／驅邪」方法可能包含下列哪一項？', options: ['貼符、拜太歲、收驚與道教儀式（視在地文化而定）', '投資理財', '體育鍛煉', '烹飪課程'], correct: 0, sources: ['民俗文獻/節目'] }
     ];
 
-    // Merge non-destructively: expose both names used in code
-    try {
-        // keep legacy variable name if used elsewhere: paranormalQuestions
-        window.paranormalQuestions = Array.isArray(window.paranormalQuestions) && window.paranormalQuestions.length>0 ? window.paranormalQuestions.concat(hkGhostStarter) : hkGhostStarter.slice();
-    } catch(e){ window.paranormalQuestions = hkGhostStarter.slice(); }
+    // Merge with deduplication using Map to prevent duplicate questions
+    (function(){
+        const deduplicateQuestions = (baseQuestions, extraQuestions) => {
+            const map = new Map();
+            const allQuestions = (Array.isArray(baseQuestions) && baseQuestions.length > 0 ? baseQuestions : []).concat(extraQuestions || []);
+            allQuestions.forEach(q => {
+                if (q && q.question && !map.has(q.question)) {
+                    map.set(q.question, q);
+                }
+            });
+            return Array.from(map.values());
+        };
+        
+        try {
+            const baseParanormal = Array.isArray(window.paranormalQuestions) && window.paranormalQuestions.length > 0 ? window.paranormalQuestions : [];
+            window.paranormalQuestions = deduplicateQuestions(baseParanormal, hkGhostStarter);
+        } catch(e) { window.paranormalQuestions = hkGhostStarter.slice(); }
 
-    try {
-        window.hkGhostQuestions = Array.isArray(window.hkGhostQuestions) && window.hkGhostQuestions.length>0 ? window.hkGhostQuestions.concat(hkGhostStarter) : hkGhostStarter.slice();
-    } catch(e){ window.hkGhostQuestions = hkGhostStarter.slice(); }
+        try {
+            const baseGhost = Array.isArray(window.hkGhostQuestions) && window.hkGhostQuestions.length > 0 ? window.hkGhostQuestions : [];
+            window.hkGhostQuestions = deduplicateQuestions(baseGhost, hkGhostStarter);
+        } catch(e) { window.hkGhostQuestions = hkGhostStarter.slice(); }
+    })();
 
     try { console.info('Injected hkGhost/paranormal starter bank (merged) — sources: 28HSE, Uwants, LIHKG, 《香港怪談》, TimeOut, 《異靈靈異》, 維基)'); } catch(e){}
 
@@ -9617,7 +10648,7 @@ function showAlertDialog(message) {
             'security': typeof securityQuestions !== 'undefined' ? securityQuestions : [],
             'database': typeof databaseQuestions !== 'undefined' ? databaseQuestions : [],
             'retail-system': typeof retailSystemQuestions !== 'undefined' ? retailSystemQuestions : [],
-            'intranet-system': typeof intranetQuestions !== 'undefined' ? intranetQuestions : [],
+            'intranet-system': intranetQuestions,
             'paranormal': typeof paranormalQuestions !== 'undefined' ? paranormalQuestions : [],
             'mobile': typeof mobileQuestions !== 'undefined' ? mobileQuestions : [],
             'hk-driving': typeof hkDrivingQuestions !== 'undefined' ? hkDrivingQuestions : [],
@@ -9641,6 +10672,7 @@ function showAlertDialog(message) {
 
         // 香港樂壇題庫（starter set，   蓋經典至2025新星）
         const hkMusicQuestions = [
+            // 香港經典藝人
             { question: "哪一位被廣泛認為是香港流行音樂黃金時期(80s-90s)的重要歌手？", options: ["張國榮", "周杰倫", "Beyonce", "Adele"], correct: 0 },
             { question: "『作曲/填詞/監製』中，哪個角色主要負責歌曲的旋律創作？", options: ["作曲", "填詞", "監製", "宣傳"], correct: 0 },
             { question: "叱咤樂壇流行榜頒獎典禮主要表彰哪種類型的音樂人？", options: ["香港本地流行音樂藝人", "電影導演", "美術設計師", "演唱會主辦方"], correct: 0 },
@@ -9648,9 +10680,62 @@ function showAlertDialog(message) {
             { question: "若要研究一位歌手的『網民認知』與爭議點，最常參考的來源包括？", options: ["媒體報導、社交媒體討論、頒獎及新聞檔案", "財務報表", "食評網站", "專利清單"], correct: 0 },
             { question: "哪個年代通常被視為香港流行音樂的經典時期？", options: ["70s-90s", "2000s-2010s", "2010s-2020s", "1950s僅早期"], correct: 0 },
             { question: "在歌曲製作中，監製 (Producer) 的一項主要責任是什麼？", options: ["統籌製作流程、音色選擇與藝人表現指導", "印刷宣傳海報", "管理演唱會門票", "編寫財務報告"], correct: 0 },
-            { question: "當   到 '新星' 在 2025 年崛起的判定指標通常包含？", options: ["串流播放量、獲獎、媒體曝光、社群聲量", "只看唱片銷量", "只看電台播放次數", "只看演唱會場地大小"], correct: 0 },
-            { question: "下列哪位/哪個組合是香港樂壇歷史上具代表性的組合/人物（多項例子）？", options: ["Beyond", "The Beatles", "Backstreet Boys", "Spice Girls"], correct: 0 },
-            { question: "研究歌手歷史文化時『類別層級』指的是什麼？", options: ["例如：歌手->時期->流派->代表作", "只看歌手年齡", "只看唱片公司", "只看演唱會   數"], correct: 0 }
+            { question: "當代香港新星在 2026 年崛起的判定指標通常包含？", options: ["串流播放量、獲獎、媒體曝光、社群聲量", "只看唱片銷量", "只看電台播放次數", "只看演唱會場地大小"], correct: 0 },
+            { question: "下列哪位/哪個組合是香港樂壇歷史上具代表性的組合/人物？", options: ["Beyond", "The Beatles", "Backstreet Boys", "Spice Girls"], correct: 0 },
+            { question: "研究歌手歷史文化時『類別層級』指的是什麼？", options: ["例如：歌手->時期->流派->代表作", "只看歌手年齡", "只看唱片公司", "只看演唱會"], correct: 0 },
+            
+            // Mirror 鏡像男團 - 具體成員
+            { question: "Mirror 由 ViuTV 推出，是香港第一男子偶像組合，於哪一年首次亮相？", options: ["2018年", "2015年", "2020年", "2019年"], correct: 0 },
+            { question: "Mirror 的知名成員 Keung To（炳琦）因參與《全民造星 2》而人氣大增，其風格被形容為？", options: ["實力派唱跳俱佳的舞蹈藝人", "純粹搖滾歌手", "古典樂器演奏家", "相聲演員"], correct: 0 },
+            { question: "Anson Lo（安俊朋）是 Mirror 的主要成員，其代表作包括？", options: ["《光年之外》、與 Mirror 合作的多首舞蹈大作", "純古典音樂作品", "西方搖滾歌曲", "傳統粵語老歌翻唱"], correct: 0 },
+            { question: "Mirror 成員 Eden 與 Ian 等人在 2022 年演唱會上遭遇重大意外，該事故為何？", options: ["舞台鏡面裝置掉落導致成員受傷", "全體成員無故缺席", "音箱故障中止表演", "燈光系統失靈"], correct: 0 },
+            { question: "Mirror 在 2024-2026 年間的音樂方向趨勢包括？", options: ["結合香港本地文化與國際舞蹈流行樂元素、推出新的概念專輯", "完全轉向傳統粵曲", "解散退出樂壇", "改唱美國鄉村音樂"], correct: 0 },
+            { question: "Mirror 的成員團隊組成以什麼能力見長？", options: ["唱歌、舞蹈、演技、綜藝能力均衡發展", "只有聲樂實力", "只擅長舞蹈", "只從事配音工作"], correct: 0 },
+            { question: "在 2026 年，Mirror 面臨的主要挑戰包括？", options: ["成員兵役與演藝事業平衡、粉絲期待管理、新專輯創意方向", "市場完全消亡", "無任何挑戰", "粉絲人數激增"], correct: 0 },
+            
+            // ERROR 樂隊 - 擴展
+            { question: "ERROR 樂隊成立於 2009 年，音樂風格獨樹一幟，主要特色是？", options: ["融合另類搖滾、Indie 與實驗音樂、邊緣詩意的歌詞", "純K-pop舞蹈風格", "古典交響樂", "鄉村民謠"], correct: 0 },
+            { question: "ERROR 樂隊主唱陳健安以何種特質在香港樂壇獲得認可？", options: ["獨特的沙啞嗓音、富有感染力的舞台表現與創意編曲能力", "甜美高亢嗓音", "說唱風格獨特", "傳統民族音樂"], correct: 0 },
+            { question: "ERROR 樂隊的代表作《一手拿著天空》所反映的主題是？", options: ["對社會現實的深刻思考與青年世代的困境", "純愛情故事", "慶祝節日歌曲", "商業廣告歌"], correct: 0 },
+            { question: "ERROR 樂隊在香港獨立音樂圈的地位可被描述為？", options: ["先鋒者與引領風潮的樂隊、影響多代香港樂迷", "籍籍無名的小樂隊", "過時的古董樂團", "純粹商業化樂團"], correct: 0 },
+            
+            // Collar 樂隊 - 香港樂隊（2026年更新）
+            { question: "Collar 是香港獨立搖滾樂隊，其音樂風格融合了什麼元素？", options: ["都市搖滾、電子音樂與本地文化敘事", "K-pop舞曲", "古典協奏曲", "民族民謠"], correct: 0 },
+            { question: "Collar 樂隊在 2024-2026 年發佈的新作品趨勢是？", options: ["更大膽的實驗音樂編排、融合數位音效與傳統樂器", "回歸傳統粵曲", "轉向流行舞曲", "停止創作"], correct: 0 },
+            { question: "Collar 樂隊的代表歌曲通常探討的主題包括？", options: ["城市孤獨、身份認同、社會矛盾等深層人文話題", "只歌頌愛情", "只唱歌頌國家", "純粹娛樂搞笑歌曲"], correct: 0 },
+            { question: "Collar 在香港樂壇 2026 年的策略是？", options: ["持續創新、舉辦小型演唱會、推出限量實體專輯與線上直播", "大規模商業化", "解散退休", "改名重新出發"], correct: 0 },
+            { question: "Collar 樂隊成員的音樂背景多來自於？", options: ["香港本地音樂教育與獨立樂隊培養、海外音樂學習", "純粹海外簽約", "網紅選秀節目", "電影配樂部門"], correct: 0 },
+            
+            // Sica - 香港女歌手（修正）
+            { question: "Sica（詩嘉）是現代香港新生代女歌手，其音樂風格主要偏向？", options: ["時尚流行樂、融合 R&B 與 Pop 元素", "古典交響樂", "死亡金屬搖滾", "鄉村民謠"], correct: 0 },
+            { question: "香港女歌手 Sica 的代表作風格特點為何？", options: ["富有年輕活力、節奏感強烈、兼具抒情與勁歌風格", "沉悶陰鬱", "純器樂編排", "說唱風格獨特"], correct: 0 },
+            { question: "Sica 在香港新一代女性音樂人中的代表作包括？", options: ["多首獲得網路好評的 EP 與單曲、參與綜藝節目展現才華", "沒有任何代表作", "古老經典翻唱", "電視廣告配樂"], correct: 0 },
+            { question: "Sica 與其他香港女歌手的差異點主要體現在？", options: ["獨特的個人風格定位、對現代節奏編排的理解與國際化視野", "完全相同無差異", "音質極差", "只唱傳統老歌"], correct: 0 },
+            { question: "Sica 在 2026 年的音樂規劃可能包括？", options: ["推出新專輯、參與國際音樂節、舉辦小型演唱會、跨界合作", "完全退隱", "轉行從事其他職業", "重複發行舊歌"], correct: 0 },
+            
+            // BTS（防彈少年團）
+            { question: "BTS 由韓國 Big Hit Entertainment（現 HYBE）在 2013 年首次亮相，已發展成何種規模？", options: ["全球超級巨星組合、粉絲遍佈全球、音樂銷量破億", "小眾樂隊", "已經解散", "只在亞洲流行"], correct: 0 },
+            { question: "BTS 成員包括 RM、Suga、Jin、J-Hope、Jimin、V、Jungkook 共 7 人，其中誰被視為隊長？", options: ["RM（南俊）", "Suga", "Jin", "Jungkook"], correct: 0 },
+            { question: "BTS 的代表作《Dynamite》2020 年登上 Billboard Hot 100 第 1 名，反映了什麼現象？", options: ["K-pop 全球影響力空前提升、打破西方音樂圈壟斷", "韓國音樂徹底被淘汰", "無任何重要意義", "只在網路上流行"], correct: 0 },
+            { question: "BTS 成員分別於 2023-2025 年完成兵役，其中最後完成者是？", options: ["Jungkook（俶圭）在 2025 年上半年完成", "RM 最後完成", "全體同時完成", "都不需要兵役"], correct: 0 },
+            { question: "BTS 在聯合國發表的演講主題通常關於？", options: ["自愛、追夢、青年賦權與希望傳遞", "商業宣傳", "政治議題", "批評他國"], correct: 0 },
+            { question: "BTS 對全球音樂產業的貢獻包括？", options: ["推動亞洲音樂全球化、展示多元化音樂風格、激發新生代創作靈感", "毀壞音樂產業", "無任何貢獻", "純粹商業利用"], correct: 0 },
+            
+            // BLACKPINK（詳細）
+            { question: "BLACKPINK 是 YG Entertainment 旗下女子組合，於 2016 年出道，成員共幾位？", options: ["4位（Jisoo、Jennie、Rosé、Lisa）", "3位", "5位", "6位"], correct: 0 },
+            { question: "BLACKPINK 的成員 Jisoo 來自韓國，Jennie 與 Rosé 背景為？", options: ["Jennie 在美國出生長大，Rosé 來自紐西蘭並會唱歌與舞蹈", "都來自中國", "都來自日本", "都來自泰國"], correct: 0 },
+            { question: "BLACKPINK 成員 Lisa 的背景特色是什麼？", options: ["泰國籍、精通舞蹈與多語言、個人魅力強大", "只會唱歌", "完全不會跳舞", "只說一種語言"], correct: 0 },
+            { question: "BLACKPINK 的代表作《DDU-DU DDU-DU》（2018）的音樂特色為？", options: ["強勁 Hip-hop 舞蹈風格、辨識度極高的旋律與視覺概念", "輕柔抒情曲", "古典樂編排", "民族音樂風格"], correct: 0 },
+            { question: "BLACKPINK 在 Coachella（2023）的表演被讚譽為什麼？", options: ["K-pop 首次大規模登上美國頂級音樂節、舞蹈編排完美、與美國樂迷互動成功", "表演失敗", "無人關注", "被批評表現不佳"], correct: 0 },
+            { question: "BLACKPINK 全球粉絲軍團名為？", options: ["BLINKs（閃爍之光）", "ARMY", "EXO-L", "Once"], correct: 0 },
+            { question: "BLACKPINK 在 2024-2026 年的發展方向趨勢包括？", options: ["成員個人活動擴展、推出聯合專輯、參與國際電影與時尚產業、慈善活動", "全體解散", "只做傳統音樂", "退出國際舞台"], correct: 0 },
+            
+            // 國際音樂產業知識
+            { question: "串流平台如 Spotify、YouTube Music 對音樂產業的影響包括？", options: ["改變歌手收入模式、提升全球可及性、影響創作趨勢", "完全消除盜版", "使音樂完全免費", "終止唱片公司"], correct: 0 },
+            { question: "當代音樂人通常透過什麼管道建立粉絲基礎？", options: ["社交媒體、串流平台、線上直播、粉絲互動", "只透過電台廣播", "只透過唱片店", "只透過電視節目"], correct: 0 },
+            { question: "跨國音樂合作（如韓国 × 歐美）的優勢包括？", options: ["融合不同風格、擴大受眾範圍、文化交流、音樂創新", "降低音樂品質", "減少創意", "引發文化衝突"], correct: 0 },
+            { question: "2026 年亞洲音樂在全球樂壇的地位變化為？", options: ["持續上升、K-pop、J-pop、C-pop 深入主流市場、影響力與日俱增", "完全衰退", "無任何變化", "被西方音樂完全壓制"], correct: 0 },
+            { question: "香港樂壇與國際樂壇的融合趨勢在 2026 年表現為？", options: ["香港藝人積極參與國際舞台、邀請國際製作人、推出雙語/多語言作品", "完全孤立", "無融合跡象", "香港音樂被邊緣化"], correct: 0 }
         ];
 
         if (typeof bankMap !== 'undefined') {
@@ -11618,6 +12703,213 @@ document.addEventListener('DOMContentLoaded', function(){
             setTimeout(function() {
                 gameScreen.style.opacity = '1';
             }, 10);
+        }
+    };
+
+    // ========== HINT SYSTEM EVENT LISTENERS ==========
+    const hintButtons = document.querySelectorAll('.hint-btn');
+    hintButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const hintType = e.target.dataset.hint;
+            try {
+                switch(hintType) {
+                    case 'remove':
+                        hintSystem.removeIncorrectOption();
+                        break;
+                    case 'smart':
+                        hintSystem.showSmartHint();
+                        break;
+                    case 'time':
+                        hintSystem.extendTime();
+                        break;
+                }
+                // Update button states
+                updateHintButtonStates();
+            } catch (error) {
+                console.error('Hint system error:', error);
+            }
+        });
+    });
+
+    // Update hint button states based on coins and usage
+    window.updateHintButtonStates = function() {
+        hintButtons.forEach(btn => {
+            const hintType = btn.dataset.hint;
+            const cost = hintSystem.hintCosts[hintType];
+            const tool = btn.closest('.hint-tool');
+            
+            if (coins < cost || !hintSystem.canUseHint(hintType)) {
+                btn.disabled = true;
+                tool.classList.add('disabled');
+            } else {
+                btn.disabled = false;
+                tool.classList.remove('disabled');
+            }
+        });
+    };
+
+    // ========== ANALYTICS PANEL EVENT LISTENERS ==========
+    const analyticsBtn = document.getElementById('analyticsBtn');
+    const analyticsPanel = document.getElementById('analyticsPanel');
+    const closeAnalyticsBtn = document.getElementById('closeAnalyticsBtn');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+
+    if (analyticsBtn) {
+        analyticsBtn.addEventListener('click', () => {
+            analyticsPanel.style.display = 'block';
+            updateAnalyticsDisplay();
+            window.scrollTo(0, 0);
+        });
+    }
+
+    if (closeAnalyticsBtn) {
+        closeAnalyticsBtn.addEventListener('click', () => {
+            analyticsPanel.style.display = 'none';
+        });
+    }
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabName = btn.dataset.tab;
+            
+            // Update active button
+            tabButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Update active tab content
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').classList.add('active');
+        });
+    });
+
+    // Update analytics display with data (v2.0.0 升級版本 - 增強統計功能)
+    window.updateAnalyticsDisplay = function() {
+        const data = gameAnalytics.playerData;
+        
+        // 計算進階統計數據
+        const accuracy = gameAnalytics.getAccuracy();
+        const avgScorePerGame = data.totalGames > 0 ? (data.totalScore / data.totalGames).toFixed(2) : 0;
+        const winRate = data.totalGames > 0 ? ((data.correctAnswers / (data.correctAnswers + data.wrongAnswers)) * 100).toFixed(1) : 0;
+        
+        // Update overview stats
+        document.getElementById('accuracyValue').textContent = accuracy + '%';
+        document.getElementById('totalScoreValue').textContent = data.totalScore.toLocaleString();
+        document.getElementById('gamesPlayedValue').textContent = data.totalGames;
+        document.getElementById('maxComboValue').textContent = data.maxCombo;
+        
+        // 添加進階統計顯示
+        const statsContainer = document.querySelector('.stats-grid');
+        if (statsContainer && !document.getElementById('advancedStatsPanel')) {
+            const advancedDiv = document.createElement('div');
+            advancedDiv.id = 'advancedStatsPanel';
+            advancedDiv.style.cssText = `
+                grid-column: 1 / -1;
+                margin-top: 20px;
+                padding: 15px;
+                background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(75, 0, 130, 0.05));
+                border: 2px solid rgba(138, 43, 226, 0.3);
+                border-radius: 12px;
+            `;
+            advancedDiv.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                    <div style="padding: 10px; background: rgba(0, 240, 255, 0.1); border-radius: 8px; border-left: 4px solid #00f0ff;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">勝率</div>
+                        <div style="font-size: 20px; color: #00f0ff; font-weight: bold;">${winRate}%</div>
+                    </div>
+                    <div style="padding: 10px; background: rgba(138, 43, 226, 0.1); border-radius: 8px; border-left: 4px solid #da70d6;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">平均每局分數</div>
+                        <div style="font-size: 20px; color: #da70d6; font-weight: bold;">${avgScorePerGame}</div>
+                    </div>
+                    <div style="padding: 10px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 4px solid #ffc107;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">總答題數</div>
+                        <div style="font-size: 20px; color: #ffc107; font-weight: bold;">${data.totalQuestions}</div>
+                    </div>
+                    <div style="padding: 10px; background: rgba(40, 167, 69, 0.1); border-radius: 8px; border-left: 4px solid #28a745;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">答對題數</div>
+                        <div style="font-size: 20px; color: #28a745; font-weight: bold;">${data.correctAnswers}</div>
+                    </div>
+                </div>
+            `;
+            statsContainer.appendChild(advancedDiv);
+        } else if (document.getElementById('advancedStatsPanel')) {
+            // 更新已有的進階統計面板
+            const panel = document.getElementById('advancedStatsPanel');
+            panel.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                    <div style="padding: 10px; background: rgba(0, 240, 255, 0.1); border-radius: 8px; border-left: 4px solid #00f0ff;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">勝率</div>
+                        <div style="font-size: 20px; color: #00f0ff; font-weight: bold;">${winRate}%</div>
+                    </div>
+                    <div style="padding: 10px; background: rgba(138, 43, 226, 0.1); border-radius: 8px; border-left: 4px solid #da70d6;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">平均每局分數</div>
+                        <div style="font-size: 20px; color: #da70d6; font-weight: bold;">${avgScorePerGame}</div>
+                    </div>
+                    <div style="padding: 10px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 4px solid #ffc107;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">總答題數</div>
+                        <div style="font-size: 20px; color: #ffc107; font-weight: bold;">${data.totalQuestions}</div>
+                    </div>
+                    <div style="padding: 10px; background: rgba(40, 167, 69, 0.1); border-radius: 8px; border-left: 4px solid #28a745;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px;">答對題數</div>
+                        <div style="font-size: 20px; color: #28a745; font-weight: bold;">${data.correctAnswers}</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Update category list
+        const categoryList = document.getElementById('categoryList');
+        categoryList.innerHTML = '';
+        if (Object.keys(data.categoryStats).length === 0) {
+            categoryList.innerHTML = '<p style="text-align:center; color: rgba(255,255,255,0.7);">尚未有類別數據，開始遊戲後會出現</p>';
+        } else {
+            Object.entries(data.categoryStats).forEach(([name, stats]) => {
+                const accuracy = stats.played > 0 ? ((stats.correct / stats.played) * 100).toFixed(1) : 0;
+                categoryList.innerHTML += `
+                    <div class="category-analysis-card">
+                        <div class="card-header">
+                            <span class="category-name">${name}</span>
+                            <span class="category-icon">📊</span>
+                        </div>
+                        <div class="card-stats">
+                            <div class="stat-row">
+                                <span class="label">正確率</span>
+                                <span class="value">${accuracy}%</span>
+                                <div class="progress-bar" style="flex:1; margin-left:10px;">
+                                    <div class="progress-fill" style="width: ${accuracy}%"></div>
+                                </div>
+                            </div>
+                            <div class="stat-row">
+                                <span class="label">已完成</span>
+                                <span class="value">${stats.correct}/${stats.played}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        // Update mistakes list
+        const mistakesList = document.getElementById('mistakesList');
+        mistakesList.innerHTML = '';
+        const topMistakes = gameAnalytics.getTopMistakes(5);
+        if (topMistakes.length === 0) {
+            mistakesList.innerHTML = '<p style="text-align:center; color: rgba(255,255,255,0.7);">還沒有錯誤記錄！繼續加油！</p>';
+        } else {
+            topMistakes.forEach(mistake => {
+                const errorRate = (mistake.wrongCount / (mistake.correctCount + mistake.wrongCount) * 100).toFixed(1);
+                mistakesList.innerHTML += `
+                    <div class="mistake-card">
+                        <div class="mistake-question">💡 ${mistake.question}</div>
+                        <div class="mistake-stats">
+                            <span class="wrong-count">❌ ${mistake.wrongCount} 次錯誤</span>
+                            <span class="correct-count">✅ ${mistake.correctCount} 次正確</span>
+                            <span class="accuracy">錯誤率: ${errorRate}%</span>
+                        </div>
+                    </div>
+                `;
+            });
         }
     };
 
